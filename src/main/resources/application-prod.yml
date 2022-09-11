@@ -1,22 +1,15 @@
-#Banco MYSQL
+#Banco Postgres
 
 app:
   message: This is the property file to the ${spring.application.name} specific for PROD environment
 
 spring:
   datasource:
-    url: jdbc:h2:mem:dbsnowee
-    driver-class-name: org.h2.Driver
-    username: root
-    password: root
+    url: ${JDBC_DATASOURCE_URL}
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: true
     properties:
       hibernate:
         show_sql: true
         format_sql: true
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-

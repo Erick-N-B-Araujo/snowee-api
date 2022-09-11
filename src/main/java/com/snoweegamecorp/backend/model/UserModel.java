@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.PackagePrivate;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -21,7 +22,8 @@ import lombok.experimental.PackagePrivate;
 public class UserModel {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name= "increment", strategy = "increment")
 	private Long id;
 	
 	@Column
