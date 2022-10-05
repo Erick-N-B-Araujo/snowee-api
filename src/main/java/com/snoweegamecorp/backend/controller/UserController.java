@@ -49,7 +49,7 @@ public class UserController {
 		return repository
 				.findById(id)
 				.map(user -> {
-					user.setAdmin(true);
+					//user.setAdmin(true);
 					user.setUpdatedAt(LocalDateTime.now());
 					repository.save(user);
 					return user;

@@ -1,6 +1,9 @@
 package com.snoweegamecorp.backend.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -16,37 +19,47 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Table(name = "tb_users")
-public class UserModel {
-
+public class UserModel implements Serializable {
+	private static final long serialVerionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name= "increment", strategy = "increment")
 	private Long id;
-	
 	@Column
-	private String username;
-	
+	private String firstName;
+	@Column
+	private String lastName;
+	@Column
+	private String email;
 	@Column
 	private String password;
-	
-	@Column
-	private boolean admin;
-	
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime createdAt;
-	
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
-
-	@ManyToOne
-	@JsonIgnoreProperties("users")
-	private PermissionModel permission;
-	
+	@ManyToMany
+	@JoinTable(name = "tb_user_permissions",
+				joinColumns = @JoinColumn(name = "user_id"),
+				inverseJoinColumns = @JoinColumn(name = "permission_id"))
+	private Set<PermissionModel> permissions;
 	@PrePersist
 	public void beforeSave() {
 		setCreatedAt(LocalDateTime.now());
+	}
+	public UserModel(){
+	}
+	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionModel> permissions) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.permissions = permissions;
 	}
 
 	public Long getId() {
@@ -55,23 +68,11 @@ public class UserModel {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public boolean isAdmin() {
-		return admin;
-	}
-	public void setAdmin(boolean admin) {
-		this.admin = admin;
 	}
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
@@ -85,10 +86,39 @@ public class UserModel {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	public PermissionModel getPermission() {
-		return permission;
+	public Set<PermissionModel> getPermissions() {
+		return permissions;
 	}
-	public void setPermission(PermissionModel permission) {
-		this.permission = permission;
+	public void setPermissions(Set<PermissionModel> permissions) {
+		this.permissions = permissions;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		UserModel userModel = (UserModel) o;
+		return id.equals(userModel.id);
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 }
