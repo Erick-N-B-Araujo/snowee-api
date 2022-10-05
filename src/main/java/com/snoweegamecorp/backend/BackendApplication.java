@@ -1,6 +1,7 @@
 package com.snoweegamecorp.backend;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
 import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.repository.PermissionRepository;
@@ -29,6 +30,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class BackendApplication {
 	@Autowired
 	private PermissionRepository permissionRepo;
+
+	@Autowired
+	private UserRepository userRepository;
+	public Long id = Long.valueOf(1);
 	@Bean
 	public CommandLineRunner init() {
 		return new CommandLineRunner() {
@@ -40,6 +45,18 @@ public class BackendApplication {
 				PermissionModel permissionGuest = new PermissionModel();
 				permissionGuest.setPermissionName("guest");
 				permissionRepo.save(permissionGuest);
+				Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionAdmin, permissionGuest));
+				UserModel user = new UserModel(
+						id,
+						"Erick",
+						"Erick",
+						"batistasd678@gmail.com",
+						"1234",
+						null,
+						null,
+						permissions
+				);
+				userRepository.save(user);
 			}
 		};
 	}

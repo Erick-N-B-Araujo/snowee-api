@@ -8,6 +8,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.UserRepository;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class UserController {
 	private UserRepository repository;
 	
 	@PostMapping
-	public UserModel save(@RequestBody UserModel user)
+	public UserModel save(@Valid @RequestBody UserModel user)
 	{
 		return repository
 				.save(user);

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -24,13 +25,16 @@ public class PermissionModel implements Serializable {
     @Column
     private String permissionName;
 
-    @OneToMany(mappedBy = "permissions", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("permission")
-    private List<UserModel> users;
+    @ManyToMany
+    @JoinTable(name = "tb_user_permissions",
+            joinColumns = @JoinColumn(name = "permission_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonIgnoreProperties("permissions")
+    private Set<UserModel> users;
 
     public PermissionModel(){
     }
-    public PermissionModel(Long id, String permissionName, List<UserModel> users) {
+    public PermissionModel(Long id, String permissionName, Set<UserModel> users) {
         super();
         this.id = id;
         this.permissionName = permissionName;
@@ -53,11 +57,11 @@ public class PermissionModel implements Serializable {
         this.permissionName = permissionName;
     }
 
-    public List<UserModel> getUsers() {
+    public Set<UserModel> getUsers() {
         return users;
     }
 
-    public void setUsers(List<UserModel> users) {
+    public void setUsers(Set<UserModel> users) {
         this.users = users;
     }
 

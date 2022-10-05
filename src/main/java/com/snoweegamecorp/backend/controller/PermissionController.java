@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class PermissionController {
     private PermissionRepository repository;
 
     @PostMapping
-    public PermissionModel savePermission(@RequestBody PermissionModel permission)
+    public PermissionModel savePermission(@Valid @RequestBody PermissionModel permission)
     {
         return repository
                 .save(permission);
@@ -43,7 +44,7 @@ public class PermissionController {
     }
 
     @PutMapping
-    public ResponseEntity<PermissionModel> putPermission(@RequestBody PermissionModel permission){
+    public ResponseEntity<PermissionModel> putPermission(@Valid @RequestBody PermissionModel permission){
         return ResponseEntity.ok(repository.save(permission));
     }
 

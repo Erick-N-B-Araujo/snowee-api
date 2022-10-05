@@ -6,6 +6,9 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,12 +29,19 @@ public class UserModel implements Serializable {
 	@GenericGenerator(name= "increment", strategy = "increment")
 	private Long id;
 	@Column
+	@Size(min = 3, max = 60, message = "FirstName deve ter entre 3 a 60 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String firstName;
 	@Column
+	@Size(min = 3, max = 60, message = "LastName deve ter entre 3 a 60 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String lastName;
 	@Column
+	@Email(message = "Não entrar com email inválido!")
 	private String email;
 	@Column
+	@Size(min = 4, max = 8, message = "Password deve ter entre 4 a 8 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String password;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
