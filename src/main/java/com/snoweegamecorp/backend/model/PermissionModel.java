@@ -29,7 +29,7 @@ public class PermissionModel implements Serializable {
     @JoinTable(name = "tb_user_permissions",
             joinColumns = @JoinColumn(name = "permission_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    @JsonIgnoreProperties("permissions")
+    @JsonIgnoreProperties({"permissions","firstName","lastName","password","createdAt","updatedAt"})
     private Set<UserModel> users;
 
     public PermissionModel(){
