@@ -53,6 +53,7 @@ public class UserModel implements Serializable {
 	@JoinTable(name = "tb_user_permissions",
 				joinColumns = @JoinColumn(name = "user_id"),
 				inverseJoinColumns = @JoinColumn(name = "permission_id"))
+	@JsonIgnoreProperties("users")
 	private Set<PermissionModel> permissions;
 	@PrePersist
 	public void beforeSave() {
