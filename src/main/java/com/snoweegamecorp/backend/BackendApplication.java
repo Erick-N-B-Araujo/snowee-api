@@ -2,6 +2,8 @@ package com.snoweegamecorp.backend;
 
 import java.time.LocalDateTime;
 
+import com.snoweegamecorp.backend.model.PermissionModel;
+import com.snoweegamecorp.backend.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -25,11 +27,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 			"com.snoweegamecorp.backend.repository"
 			})
 public class BackendApplication {
-
-	@RequestMapping("/")
-	@ResponseBody
-	String home() {
-		return "Hello World!";
+	@Autowired
+	private PermissionRepository permissionRepo;
+	@Bean
+	public CommandLineRunner init() {
+		return new CommandLineRunner() {
+			@Override
+			public void run(String... args) throws Exception {
+				PermissionModel permissionAdmin = new PermissionModel();
+				permissionAdmin.setPermissionName("admin");
+				permissionRepo.save(permissionAdmin);
+				PermissionModel permissionGuest = new PermissionModel();
+				permissionGuest.setPermissionName("guest");
+				permissionRepo.save(permissionGuest);
+			}
+		};
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
