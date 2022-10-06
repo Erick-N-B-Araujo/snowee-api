@@ -1,6 +1,7 @@
 package com.snoweegamecorp.backend.resources.exceptions;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +52,18 @@ public class ExceptionHandler {
         for (FieldError f: e.getBindingResult().getFieldErrors()){
             err.addError(f.getField(), f.getDefaultMessage());
         }
+        return ResponseEntity.status(status).body(err);
+    }
 
+    @org.springframework.web.bind.annotation.ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ValidationError> validationEmail(DataIntegrityViolationException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+        ValidationError err = new ValidationError();
+        err.setTimeStamp(Instant.now());
+        err.setStatus(status.value());
+        err.setError("Email já cadastrado!");
+        err.setMessage(e.getMessage());
+        err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }

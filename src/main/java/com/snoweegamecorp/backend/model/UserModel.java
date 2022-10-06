@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.snoweegamecorp.backend.service.validation.UserInsertValid;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.PackagePrivate;
@@ -36,7 +37,7 @@ public class UserModel implements Serializable {
 	@Size(min = 3, max = 60, message = "LastName deve ter entre 3 a 60 caracteres")
 	@NotBlank(message = "Campo requerido")
 	private String lastName;
-	@Column
+	@Column(unique = true)
 	@Email(message = "Não entrar com email inválido!")
 	private String email;
 	@Column
