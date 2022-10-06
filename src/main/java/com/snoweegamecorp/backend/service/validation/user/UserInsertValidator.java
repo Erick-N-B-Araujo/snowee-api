@@ -1,7 +1,7 @@
-package com.snoweegamecorp.backend.service.validation;
+package com.snoweegamecorp.backend.service.validation.user;
 
 import com.snoweegamecorp.backend.model.UserModel;
-import com.snoweegamecorp.backend.model.actions.UserInsert;
+import com.snoweegamecorp.backend.model.actions.user.UserInsert;
 import com.snoweegamecorp.backend.repository.UserRepository;
 import com.snoweegamecorp.backend.resources.exceptions.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;

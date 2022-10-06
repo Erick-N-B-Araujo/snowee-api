@@ -2,6 +2,7 @@ package com.snoweegamecorp.backend.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
-
 	@Autowired
 	private UserRepository repository;
 	
@@ -39,12 +39,21 @@ public class UserController {
 						HttpStatus.NOT_FOUND
 				));
 	}
+	@PutMapping("{id}")
+	public UserModel updateUserBy(@PathVariable Long id, @Valid @RequestBody UserModel user){
+		user.setUpdatedAt(LocalDateTime.now());
+		user.setCreatedAt(
+				repository.findById(id)
+						.get().getCreatedAt()
+		);
+		ResponseEntity.ok(user);
+		return repository.save(user);
+	}
 	@DeleteMapping("{id}")
 	public void deleteUserById(@PathVariable Long id){
 		repository
 				.deleteById(id);
 	}
-
 	@PatchMapping("{id}/admin")
 	public UserModel definePermission(@PathVariable Long id){
 		return repository

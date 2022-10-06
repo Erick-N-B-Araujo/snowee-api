@@ -13,10 +13,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.snoweegamecorp.backend.service.validation.UserInsertValid;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.PackagePrivate;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity

@@ -1,7 +1,7 @@
-package com.snoweegamecorp.backend.model.actions;
+package com.snoweegamecorp.backend.model.actions.user;
 
 import com.snoweegamecorp.backend.model.UserModel;
-import com.snoweegamecorp.backend.service.validation.UserInsertValid;
+import com.snoweegamecorp.backend.service.validation.user.UserInsertValid;
 
 @UserInsertValid
 public class UserInsert extends UserModel {

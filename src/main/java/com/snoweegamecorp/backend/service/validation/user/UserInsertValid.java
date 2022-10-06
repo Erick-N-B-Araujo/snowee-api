@@ -1,4 +1,4 @@
-package com.snoweegamecorp.backend.service.validation;
+package com.snoweegamecorp.backend.service.validation.user;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

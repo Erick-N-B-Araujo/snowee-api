@@ -52,7 +52,7 @@ public class BackendApplication {
 						"Erick",
 						"batistasd678@gmail.com",
 						"1234",
-						null,
+						LocalDateTime.now(),
 						null,
 						permissions
 				);

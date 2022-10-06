@@ -61,7 +61,8 @@ public class ExceptionHandler {
         ValidationError err = new ValidationError();
         err.setTimeStamp(Instant.now());
         err.setStatus(status.value());
-        err.setError("Email já cadastrado!");
+        err.setError("Cadastro inválido!");
+        err.addError("email", "Email já cadastrado!");
         err.setMessage(e.getMessage());
         err.setPath(request.getRequestURI());
         return ResponseEntity.status(status).body(err);
