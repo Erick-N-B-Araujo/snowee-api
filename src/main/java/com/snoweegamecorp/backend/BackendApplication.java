@@ -46,7 +46,7 @@ public class BackendApplication {
 				permissionGuest.setPermissionName("guest");
 				permissionRepo.save(permissionGuest);
 				Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionAdmin, permissionGuest));
-				UserModel user = new UserModel(
+				/*UserModel user = new UserModel(
 						id,
 						"Erick",
 						"Erick",
@@ -56,7 +56,7 @@ public class BackendApplication {
 						null,
 						permissions
 				);
-				userRepository.save(user);
+				userRepository.save(user);*/
 			}
 		};
 	}
