@@ -16,3 +16,13 @@ spring:
         format_sql: true
   thymeleaf:
     cache: true
+
+security:
+  oauth2:
+    client:
+      client-id: ${CLIENT_ID:snoweeapi}
+      client-secret: ${CLIENT_SECRET:snoweeapi}
+
+jwt:
+  secret: ${JWT_SECRET:MY-JWT-SECRET}
+  duration: ${JWT_DURATION:86400}
