@@ -2,8 +2,11 @@ package com.snoweegamecorp.backend.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,12 +19,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_users")
-public class UserModel implements Serializable {
+public class UserModel implements UserDetails, Serializable {
 	private static final long serialVerionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
@@ -39,8 +45,8 @@ public class UserModel implements Serializable {
 	@Email(message = "Não entrar com email inválido!")
 	private String email;
 	@Column
-	@Size(min = 4, max = 8, message = "Password deve ter entre 4 a 8 caracteres")
-	@NotBlank(message = "Campo requerido")
+	/*@Size(min = 4, max = 8, message = "Password deve ter entre 4 a 8 caracteres")
+	@NotBlank(message = "Campo requerido")*/
 	private String password;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -48,12 +54,12 @@ public class UserModel implements Serializable {
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_permissions",
 				joinColumns = @JoinColumn(name = "user_id"),
 				inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	@JsonIgnoreProperties("users")
-	private Set<PermissionModel> permissions;
+	private Set<PermissionModel> permissions = new HashSet<>();
 	@PrePersist
 	public void beforeSave() {
 		setCreatedAt(LocalDateTime.now());
@@ -71,15 +77,49 @@ public class UserModel implements Serializable {
 		this.updatedAt = updatedAt;
 		this.permissions = permissions;
 	}
-
+	public UserModel(UserModel user){
+		id = user.getId();
+		firstName = user.getFirstName();
+		lastName = user.getLastName();
+		email = user.getEmail();
+		user.getPermissions().forEach(permission -> this.permissions.add(new PermissionModel(permission)));
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return permissions
+				.stream()
+				.map(
+						permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
+				.collect(Collectors.toList());
+	}
+	public String getPassword() {
+		return password;
+	}
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getPassword() {
-		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;

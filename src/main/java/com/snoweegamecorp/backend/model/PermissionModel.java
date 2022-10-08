@@ -40,7 +40,16 @@ public class PermissionModel implements Serializable {
         this.permissionName = permissionName;
         this.users = users;
     }
-
+    public PermissionModel(Long id, String permissionName){
+        super();
+        this.id = id;
+        this.permissionName = permissionName;
+    }
+    public PermissionModel(PermissionModel permissionModel){
+        super();
+        id = permissionModel.getId();
+        permissionName = permissionModel.getPermissionName();
+    }
     public Long getId() {
         return id;
     }

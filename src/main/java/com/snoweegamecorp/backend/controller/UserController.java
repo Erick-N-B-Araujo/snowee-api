@@ -1,8 +1,11 @@
 package com.snoweegamecorp.backend.controller;
 
+import com.snoweegamecorp.backend.model.actions.user.UserInsert;
+import com.snoweegamecorp.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -19,12 +22,20 @@ import java.util.List;
 public class UserController {
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private UserService userService;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@PostMapping
 	public UserModel save(@Valid @RequestBody UserModel user)
 	{
-		return repository
-				.save(user);
+		//return userService.insert(user);
+		String encodedPass = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPass);
+		return repository.save(user);
 	}
 	@GetMapping()
 	public List<UserModel> getAll(){
