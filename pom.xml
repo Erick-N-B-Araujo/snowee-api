@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.7.2</version>
+		<version>2.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.snoweegamecorp</groupId>
@@ -86,7 +86,17 @@
 			<optional>true</optional>
 		</dependency>
 	</dependencies>
-
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>
@@ -107,7 +117,7 @@
 		<repository>
 		  <id>github</id>
 		  <name>GitHub OWNER Apache Maven Packages</name>
-		  <url>https://maven.pkg.github.com/Erick-Neves/Piloto-DevOPS/backend</url>
+		  <url>https://maven.pkg.github.com/Erick-Neves/snowee-api</url>
 		</repository>
 	 </distributionManagement>
 </project>
