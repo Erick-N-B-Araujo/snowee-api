@@ -1,3 +1,6 @@
 # InteliJ cache directory
 .idea/
 target/
+*.ctb~
+docs/Anotations.ctb~~
+docs/Anotations.ctb~~~
