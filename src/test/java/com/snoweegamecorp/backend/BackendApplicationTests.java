@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 class BackendApplicationTests {
 
+	/*
 	private String adminUsername;
 	private String adminPassword;
 	@Autowired
@@ -31,6 +32,6 @@ class BackendApplicationTests {
 	@Test
 	public void getToken() throws Exception {
 		String accessToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
-	}
+	}*/
 
 }

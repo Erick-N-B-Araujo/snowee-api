@@ -2,7 +2,6 @@ package com.snoweegamecorp.backend;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
 import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.UserRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @SpringBootApplication
