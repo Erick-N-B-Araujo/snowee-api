@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ns8:CreditCardTransactionInquiryResponse xmlns:ns10="http://ws.core.cortex.com/domain/types/cardidrsp" xmlns:ns11="http://ws.core.cortex.com/domain/id/currId" xmlns:ns12="http://ws.core.cortex.com/domain/types/ctrydet" xmlns:ns13="http://ws.core.cortex.com/domain/types/crdproddet" xmlns:ns5="http://ws.core.cortex.com/domain/common/rsphdr" xmlns:ns6="http://ws.core.cortex.com/domain/common/hdrusrdata" xmlns:ns7="http://ws.core.cortex.com/domain/types" xmlns:ns8="http://ws.core.cortex.com/domain/services/ccsitinq" xmlns:ns9="http://ws.core.cortex.com/domain/types/ccsitem">
+            <ns5:ResponseHeader>
+                <ns5:Version>1.0.0</ns5:Version>
+                <ns5:MsgUid>3c50f1c8-f30c-473f-bc22-96379bd80a8d</ns5:MsgUid>
+                <ns5:Source>MBK</ns5:Source>
+                <ns5:ServiceId>CreditCardTransactionInq</ns5:ServiceId>
+                <ns5:ReqDateTime>2022-08-17-02:26:29:902</ns5:ReqDateTime>
+                <ns5:RspDateTime>2022-10-19-22:17:55.131</ns5:RspDateTime>
+                <ns5:ResponseCode>000</ns5:ResponseCode>
+                <ns5:ResponseType>Success</ns5:ResponseType>
+                <ns5:ProcessingTime>93</ns5:ProcessingTime>
+                <ns5:ResponseDescription>Operation Successful</ns5:ResponseDescription>
+            </ns5:ResponseHeader>
+            <ns8:CreditCardTransactionInquiryResponseDetails>
+                <ns8:PageDetails>
+                    <ns7:PageSize>1000</ns7:PageSize>
+                    <ns7:TotalNumberOfResults>2</ns7:TotalNumberOfResults>
+                    <ns7:CurrentNumberOfResults>2</ns7:CurrentNumberOfResults>
+                    <ns7:TotalNumberOfPages>1</ns7:TotalNumberOfPages>
+                    <ns7:CurrentPageNumber>1</ns7:CurrentPageNumber>
+                </ns8:PageDetails>
+                <ns8:CreditCardTransactionList>
+                    <ns8:SingleCreditTransaction>
+                        <ns8:CreditTransactionDetails>
+                            <ns9:ItemId>514930</ns9:ItemId>
+                            <ns9:TlogId>20482960</ns9:TlogId>
+                            <ns9:AccountNumber>G0813500386</ns9:AccountNumber>
+                            <ns10:ResponseCardIdentifier>
+                                <ns10:Pan>D568410DF6674708AE9</ns10:Pan>
+                                <ns10:MaskedPan>538135_1935</ns10:MaskedPan>
+                                <ns10:VPan>CLFS000000000010</ns10:VPan>
+                                <ns10:Seqno>0</ns10:Seqno>
+                            </ns10:ResponseCardIdentifier>
+                            <ns9:BillingAmount>
+                                <ns7:Amount>500</ns7:Amount>
+                                <ns11:Currency>
+                                    <ns11:CurrCode>682</ns11:CurrCode>
+                                    <ns11:AlphaCode>SAR</ns11:AlphaCode>
+                                </ns11:Currency>
+                            </ns9:BillingAmount>
+                            <ns9:TransactionAmount>
+                                <ns7:Amount>500</ns7:Amount>
+                                <ns11:Currency>
+                                    <ns11:CurrCode>682</ns11:CurrCode>
+                                    <ns11:AlphaCode>SAR</ns11:AlphaCode>
+                                </ns11:Currency>
+                            </ns9:TransactionAmount>
+                            <ns9:LocalDate>2022-08-25</ns9:LocalDate>
+                            <ns9:TransmissionDate>2022-08-25</ns9:TransmissionDate>
+                            <ns9:TransmissionTime>150910</ns9:TransmissionTime>
+                            <ns9:SystemDate>2022-08-25</ns9:SystemDate>
+                            <ns9:StatementDate>2023-01-03</ns9:StatementDate>
+                            <ns9:TransactionDate>2022-08-25</ns9:TransactionDate>
+                            <ns9:Description>SADAD BILL PAYMENT 068CC0</ns9:Description>
+                            <ns9:TransctionCode>50</ns9:TransctionCode>
+                            <ns9:TransactionStatus>0</ns9:TransactionStatus>
+                            <ns9:MessageClass>2</ns9:MessageClass>
+                            <ns9:FunctionCode>200</ns9:FunctionCode>
+                            <ns9:Mcc>5699</ns9:Mcc>
+                            <ns9:CardAcceptorId>0100032350</ns9:CardAcceptorId>
+                            <ns9:AcquirerId>538135</ns9:AcquirerId>
+                            <ns9:AcquirerCountry>682</ns9:AcquirerCountry>
+                            <ns9:CountryDetails>
+                                <ns12:IsoCode>682</ns12:IsoCode>
+                                <ns12:Alpha3>SAU</ns12:Alpha3>
+                                <ns12:Alpha2>SA</ns12:Alpha2>
+                                <ns12:DefaultCurrency>682</ns12:DefaultCurrency>
+                                <ns12:Description>
+                                    <ns7:Description>
+                                        <ns7:Language>EN</ns7:Language>
+                                        <ns7:Description>SAUDI ARABIA</ns7:Description>
+                                    </ns7:Description>
+                                    <ns7:Description>
+                                        <ns7:Language>GB</ns7:Language>
+                                        <ns7:Description>SAUDI ARABIA</ns7:Description>
+                                    </ns7:Description>
+                                </ns12:Description>
+                            </ns9:CountryDetails>
+                            <ns9:Posted>true</ns9:Posted>
+                            <ns9:Stan>180907</ns9:Stan>
+                            <ns9:RetreivalReferenceNumber>0000008593  </ns9:RetreivalReferenceNumber>
+                            <ns9:CardAcceptorLocation>SADAD BILL PAYMENT 068CC00002822</ns9:CardAcceptorLocation>
+                            <ns9:ComponentCode>0</ns9:ComponentCode>
+                            <ns9:ItemType>1</ns9:ItemType>
+                            <ns9:TerminalCode>00121316</ns9:TerminalCode>
+                            <ns9:ApplicationRule>1</ns9:ApplicationRule>
+                            <ns9:AuthorizationAccountNumber>G0813500386</ns9:AuthorizationAccountNumber>
+                            <ns9:ItemSrouce>CTX</ns9:ItemSrouce>
+                            <ns9:ReferenceCode>20482960</ns9:ReferenceCode>
+                            <ns9:CreditDebit>D</ns9:CreditDebit>
+                        </ns8:CreditTransactionDetails>
+                        <ns8:AdditionalTransactionDetails>
+                            <ns8:ApprovalCode>031302</ns8:ApprovalCode>
+                            <ns8:CardAcceptorName>SADAD BILL PAYMENT 068CC00002822</ns8:CardAcceptorName>
+                            <ns8:CardAcceptorCity>Riyadh</ns8:CardAcceptorCity>
+                        </ns8:AdditionalTransactionDetails>
+                    </ns8:SingleCreditTransaction>
+                    <ns8:SingleCreditTransaction>
+                        <ns8:CreditTransactionDetails>
+                            <ns9:ItemId>512314</ns9:ItemId>
+                            <ns9:TlogId>20482890</ns9:TlogId>
+                            <ns9:AccountNumber>G0813500386</ns9:AccountNumber>
+                            <ns10:ResponseCardIdentifier>
+                                <ns10:Pan>D568410DF6674708AE9</ns10:Pan>
+                                <ns10:MaskedPan>538135_1935</ns10:MaskedPan>
+                                <ns10:VPan>CLFS000000000010</ns10:VPan>
+                                <ns10:Seqno>0</ns10:Seqno>
+                            </ns10:ResponseCardIdentifier>
+                            <ns9:BillingAmount>
+                                <ns7:Amount>400</ns7:Amount>
+                                <ns11:Currency>
+                                    <ns11:CurrCode>682</ns11:CurrCode>
+                                    <ns11:AlphaCode>SAR</ns11:AlphaCode>
+                                </ns11:Currency>
+                            </ns9:BillingAmount>
+                            <ns9:TransactionAmount>
+                                <ns7:Amount>400</ns7:Amount>
+                                <ns11:Currency>
+                                    <ns11:CurrCode>682</ns11:CurrCode>
+                                    <ns11:AlphaCode>SAR</ns11:AlphaCode>
+                                </ns11:Currency>
+                            </ns9:TransactionAmount>
+                            <ns9:LocalDate>2022-08-25</ns9:LocalDate>
+                            <ns9:TransmissionDate>2022-08-25</ns9:TransmissionDate>
+                            <ns9:TransmissionTime>73053</ns9:TransmissionTime>
+                            <ns9:SystemDate>2022-08-25</ns9:SystemDate>
+                            <ns9:StatementDate>2023-01-03</ns9:StatementDate>
+                            <ns9:TransactionDate>2022-08-25</ns9:TransactionDate>
+                            <ns9:Description>SADAD BILL PAYMENT 068CC0</ns9:Description>
+                            <ns9:TransctionCode>50</ns9:TransctionCode>
+                            <ns9:TransactionStatus>0</ns9:TransactionStatus>
+                            <ns9:MessageClass>2</ns9:MessageClass>
+                            <ns9:FunctionCode>200</ns9:FunctionCode>
+                            <ns9:Mcc>5699</ns9:Mcc>
+                            <ns9:CardAcceptorId>0100032350</ns9:CardAcceptorId>
+                            <ns9:AcquirerId>538135</ns9:AcquirerId>
+                            <ns9:AcquirerCountry>682</ns9:AcquirerCountry>
+                            <ns9:CountryDetails>
+                                <ns12:IsoCode>682</ns12:IsoCode>
+                                <ns12:Alpha3>SAU</ns12:Alpha3>
+                                <ns12:Alpha2>SA</ns12:Alpha2>
+                                <ns12:DefaultCurrency>682</ns12:DefaultCurrency>
+                                <ns12:Description>
+                                    <ns7:Description>
+                                        <ns7:Language>EN</ns7:Language>
+                                        <ns7:Description>SAUDI ARABIA</ns7:Description>
+                                    </ns7:Description>
+                                    <ns7:Description>
+                                        <ns7:Language>GB</ns7:Language>
+                                        <ns7:Description>SAUDI ARABIA</ns7:Description>
+                                    </ns7:Description>
+                                </ns12:Description>
+                            </ns9:CountryDetails>
+                            <ns9:Posted>true</ns9:Posted>
+                            <ns9:Stan>103050</ns9:Stan>
+                            <ns9:RetreivalReferenceNumber>0000007789  </ns9:RetreivalReferenceNumber>
+                            <ns9:CardAcceptorLocation>SADAD BILL PAYMENT 068CC00002322</ns9:CardAcceptorLocation>
+                            <ns9:ComponentCode>0</ns9:ComponentCode>
+                            <ns9:ItemType>1</ns9:ItemType>
+                            <ns9:TerminalCode>00121316</ns9:TerminalCode>
+                            <ns9:ApplicationRule>1</ns9:ApplicationRule>
+                            <ns9:AuthorizationAccountNumber>G0813500386</ns9:AuthorizationAccountNumber>
+                            <ns9:ItemSrouce>CTX</ns9:ItemSrouce>
+                            <ns9:ReferenceCode>20482890</ns9:ReferenceCode>
+                            <ns9:CreditDebit>D</ns9:CreditDebit>
+                        </ns8:CreditTransactionDetails>
+                        <ns8:AdditionalTransactionDetails>
+                            <ns8:ApprovalCode>026468</ns8:ApprovalCode>
+                            <ns8:CardAcceptorName>SADAD BILL PAYMENT 068CC00002322</ns8:CardAcceptorName>
+                            <ns8:CardAcceptorCity>Riyadh</ns8:CardAcceptorCity>
+                        </ns8:AdditionalTransactionDetails>
+                    </ns8:SingleCreditTransaction>
+                </ns8:CreditCardTransactionList>
+            </ns8:CreditCardTransactionInquiryResponseDetails>
+        </ns8:CreditCardTransactionInquiryResponse>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,0 +1,93 @@
+{
+	"data": {
+		"pairs": [
+			{
+				"request": {
+					"path": [
+						{
+							"matcher": "exact",
+							"value": "/cortex/cortex-core-ws/CreditCardTransactionInquiry"
+						}
+					],
+					"method": [
+						{
+							"matcher": "exact",
+							"value": "POST"
+						}
+					],
+					"destination": [
+						{
+							"matcher": "exact",
+							"value": "obp.apidev.bsfneo.com"
+						}
+					],
+					"scheme": [
+						{
+							"matcher": "exact",
+							"value": "https"
+						}
+					],
+					"body": [
+						{
+							"matcher": "exact",
+							"value": "\u003cs:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"\u003e    \u003cs:Body\u003e        \u003cCreditCardTransactionInquiryRequest xmlns=\"http://ws.core.cortex.com/domain/services/ccsitinq\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\u003e  \u003cRequestHeader xmlns=\"http://ws.core.cortex.com/domain/common/reqhdr\"\u003e    \u003cVersion\u003e1.0.0\u003c/Version\u003e    \u003cMsgUid\u003e3c50f1c8-f30c-473f-bc22-96379bd80a8d\u003c/MsgUid\u003e    \u003cSource\u003eMBK\u003c/Source\u003e    \u003cServiceId\u003eCreditCardTransactionInq\u003c/ServiceId\u003e    \u003cReqDateTime\u003e2022-08-17-02:26:29:902\u003c/ReqDateTime\u003e  \u003c/RequestHeader\u003e  \u003cCreditCardTransactionInquiryRequestDetails\u003e    \u003cCardIdentifier xmlns=\"http://ws.core.cortex.com/domain/id/cardId\"\u003e      \u003cPan\u003eD66D75BFF7FA01C21C4\u003c/Pan\u003e    \u003c/CardIdentifier\u003e    \u003c!-- the PAN field supported both clear and encrypted card number --\u003e    \u003cSearchLevel\u003e0\u003c/SearchLevel\u003e    \u003c!-- Search Level field handles 3 values:        0: the transactions that will be retirieved are the ones linked to the card or account specified        1: the transactions posted on the default card account will be retrieved        2: the transactions posted on all the card accounts will be retrieved --\u003e    \u003cPageSetup\u003e      \u003cPageSize xmlns=\"http://ws.core.cortex.com/domain/types\"\u003e1000\u003c/PageSize\u003e      \u003cPageNumber xmlns=\"http://ws.core.cortex.com/domain/types\"\u003e1\u003c/PageNumber\u003e      \u003cReturnCount xmlns=\"http://ws.core.cortex.com/domain/types\"\u003etrue\u003c/ReturnCount\u003e    \u003c/PageSetup\u003e    \u003cSearchFilter\u003e      \u003cTransactionDateRange\u003e        \u003cDateFrom xmlns=\"http://ws.core.cortex.com/domain/types\"\u003e2022-08-01\u003c/DateFrom\u003e        \u003cDateTo xmlns=\"http://ws.core.cortex.com/domain/types\"\u003e2022-08-31\u003c/DateTo\u003e      \u003c/TransactionDateRange\u003e      \u003cPostedFlag\u003etrue\u003c/PostedFlag\u003e    \u003c/SearchFilter\u003e  \u003c/CreditCardTransactionInquiryRequestDetails\u003e\u003c/CreditCardTransactionInquiryRequest\u003e    \u003c/s:Body\u003e\u003c/s:Envelope\u003e"
+						}
+					]
+				},
+				"response": {
+					"status": 200,
+					"body": "\u003csoapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\u003e\u003csoapenv:Header/\u003e\u003csoapenv:Body\u003e\u003cns8:CreditCardTransactionInquiryResponse xmlns:ns10=\"http://ws.core.cortex.com/domain/types/cardidrsp\" xmlns:ns11=\"http://ws.core.cortex.com/domain/id/currId\" xmlns:ns12=\"http://ws.core.cortex.com/domain/types/ctrydet\" xmlns:ns13=\"http://ws.core.cortex.com/domain/types/crdproddet\" xmlns:ns5=\"http://ws.core.cortex.com/domain/common/rsphdr\" xmlns:ns6=\"http://ws.core.cortex.com/domain/common/hdrusrdata\" xmlns:ns7=\"http://ws.core.cortex.com/domain/types\" xmlns:ns8=\"http://ws.core.cortex.com/domain/services/ccsitinq\" xmlns:ns9=\"http://ws.core.cortex.com/domain/types/ccsitem\"\u003e\u003cns5:ResponseHeader\u003e\u003cns5:Version\u003e1.0.0\u003c/ns5:Version\u003e\u003cns5:MsgUid\u003e3c50f1c8-f30c-473f-bc22-96379bd80a8d\u003c/ns5:MsgUid\u003e\u003cns5:Source\u003eMBK\u003c/ns5:Source\u003e\u003cns5:ServiceId\u003eCreditCardTransactionInq\u003c/ns5:ServiceId\u003e\u003cns5:ReqDateTime\u003e2022-08-17-02:26:29:902\u003c/ns5:ReqDateTime\u003e\u003cns5:RspDateTime\u003e2022-10-20-16:46:54.412\u003c/ns5:RspDateTime\u003e\u003cns5:ResponseCode\u003e000\u003c/ns5:ResponseCode\u003e\u003cns5:ResponseType\u003eSuccess\u003c/ns5:ResponseType\u003e\u003cns5:ProcessingTime\u003e55\u003c/ns5:ProcessingTime\u003e\u003cns5:ResponseDescription\u003eOperation Successful\u003c/ns5:ResponseDescription\u003e\u003c/ns5:ResponseHeader\u003e\u003cns8:CreditCardTransactionInquiryResponseDetails\u003e\u003cns8:PageDetails\u003e\u003cns7:PageSize\u003e1000\u003c/ns7:PageSize\u003e\u003cns7:TotalNumberOfResults\u003e0\u003c/ns7:TotalNumberOfResults\u003e\u003cns7:CurrentNumberOfResults\u003e0\u003c/ns7:CurrentNumberOfResults\u003e\u003cns7:TotalNumberOfPages\u003e0\u003c/ns7:TotalNumberOfPages\u003e\u003cns7:CurrentPageNumber\u003e1\u003c/ns7:CurrentPageNumber\u003e\u003c/ns8:PageDetails\u003e\u003c/ns8:CreditCardTransactionInquiryResponseDetails\u003e\u003c/ns8:CreditCardTransactionInquiryResponse\u003e\u003c/soapenv:Body\u003e\u003c/soapenv:Envelope\u003e",
+					"encodedBody": false,
+					"headers": {
+						"Accept": [
+							"text/xml"
+						],
+						"Connection": [
+							"keep-alive"
+						],
+						"Content-Language": [
+							"en-US"
+						],
+						"Content-Type": [
+							"text/xml; charset=UTF-8"
+						],
+						"Date": [
+							"Thu, 20 Oct 2022 13:46:53 GMT"
+						],
+						"Hoverfly": [
+							"Was-Here"
+						],
+						"Set-Cookie": [
+							"BIGipServerCortex_UAT_9443=2055342602.58148.0000; path=/; Httponly; Secure"
+						],
+						"Soapaction": [
+							"\"\""
+						],
+						"Via": [
+							"kong/2.8.1.1-enterprise-edition"
+						],
+						"X-Kong-Proxy-Latency": [
+							"7"
+						],
+						"X-Kong-Upstream-Latency": [
+							"128"
+						],
+						"X-Powered-By": [
+							"Servlet/3.0"
+						]
+					},
+					"templated": false
+				}
+			}
+		],
+		"globalActions": {
+			"delays": [],
+			"delaysLogNormal": []
+		}
+	},
+	"meta": {
+		"schemaVersion": "v5.1",
+		"hoverflyVersion": "v1.3.5",
+		"timeExported": "2022-10-20T10:47:16-03:00"
+	}
+}

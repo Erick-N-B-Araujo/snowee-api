@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <soap:Body>
+        <GetAcctStatementXmlResponse xmlns="http://BSF.EStatement/">
+            <Acct_Statement xmlns="http://BSF.EStatement.AccountStatementSchema">
+                <Table xmlns="">
+                    <Transaction_Currency>SAR</Transaction_Currency>
+                    <Transaction_Date>2022-03-02T00:00:00+03:00</Transaction_Date>
+                    <Effect_Date>2022-03-02T00:00:00+03:00</Effect_Date>
+                    <Transaction_Type>DEBT</Transaction_Type>
+                    <Transaction_Type4FP>/ATM</Transaction_Type4FP>
+                    <Indicator>2</Indicator>
+                    <Description>/ATMCSHW    00000000  020904                                                                               020904       </Description>
+                    <DescriptionAr>/ATMCSHW    00000000  020904                                                                               020904       </DescriptionAr>
+                    <Debit_Amount>0.60</Debit_Amount>
+                    <Credit_Amount>0.00000</Credit_Amount>
+                    <Running_Balance>-0.60</Running_Balance>
+                    <Branch>022</Branch>
+                    <EventType>CSHW</EventType>
+                    <TimeStamp>3/3/2022 3:26:01 PM</TimeStamp>
+                </Table>
+                <Table xmlns="">
+                    <Transaction_Currency>SAR</Transaction_Currency>
+                    <Transaction_Date>2022-03-02T00:00:00+03:00</Transaction_Date>
+                    <Effect_Date>2022-03-02T00:00:00+03:00</Effect_Date>
+                    <Transaction_Type>DEBT</Transaction_Type>
+                    <Transaction_Type4FP>/ATM</Transaction_Type4FP>
+                    <Indicator>2</Indicator>
+                    <Description>/ATMCSHW    00000000  020904                                                                               020904       </Description>
+                    <DescriptionAr>/ATMCSHW    00000000  020904                                                                               020904       </DescriptionAr>
+                    <Debit_Amount>0.90</Debit_Amount>
+                    <Credit_Amount>0.00000</Credit_Amount>
+                    <Running_Balance>-1.50</Running_Balance>
+                    <Branch>022</Branch>
+                    <EventType>CSHW</EventType>
+                    <TimeStamp>3/3/2022 3:26:01 PM</TimeStamp>
+                </Table>
+                <Table xmlns="">
+                    <Transaction_Currency>SAR</Transaction_Currency>
+                    <Transaction_Date>2022-03-02T00:00:00+03:00</Transaction_Date>
+                    <Effect_Date>2022-03-02T00:00:00+03:00</Effect_Date>
+                    <Transaction_Type>DEBT</Transaction_Type>
+                    <Transaction_Type4FP>/ATM</Transaction_Type4FP>
+                    <Indicator>2</Indicator>
+                    <Description>/ATMCSHW    00000000  020904                                                                               020904       </Description>
+                    <DescriptionAr>/ATMCSHW    00000000  020904                                                                               020904       </DescriptionAr>
+                    <Debit_Amount>10</Debit_Amount>
+                    <Credit_Amount>0.00000</Credit_Amount>
+                    <Running_Balance>-11.50</Running_Balance>
+                    <Branch>022</Branch>
+                    <EventType>CSHW</EventType>
+                    <TimeStamp>3/3/2022 3:26:01 PM</TimeStamp>
+                </Table>
+            </Acct_Statement>
+        </GetAcctStatementXmlResponse>
+    </soap:Body>
+</soap:Envelope>

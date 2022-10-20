@@ -1,0 +1,96 @@
+{
+	"data": {
+		"pairs": [
+			{
+				"request": {
+					"path": [
+						{
+							"matcher": "exact",
+							"value": "/biztalk/GeneralInquiries/GeneralInquiriesService.asmx"
+						}
+					],
+					"method": [
+						{
+							"matcher": "exact",
+							"value": "POST"
+						}
+					],
+					"destination": [
+						{
+							"matcher": "exact",
+							"value": "obp.apidev.bsfneo.com"
+						}
+					],
+					"scheme": [
+						{
+							"matcher": "exact",
+							"value": "https"
+						}
+					],
+					"body": [
+						{
+							"matcher": "exact",
+							"value": "\u003csoapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:bsf=\"http://BSF.ITD.ECORP.Schemas.InquirySchema\"\u003e   \u003csoapenv:Header/\u003e   \u003csoapenv:Body\u003e      \u003cbsf:GeneralInquiries\u003e         \u003cbsf:Inquiry\u003e            \u003cServiceRq\u003e               \u003cAccount\u003e                  \u003cSourceSystem\u003eCFT\u003c/SourceSystem\u003e                  \u003cCPT\u003eL10563\u003c/CPT\u003e    \u003c!-- K20294  //  N16539   --\u003e                  \u003cIsIBAN\u003eY\u003c/IsIBAN\u003e               \u003c/Account\u003e            \u003c/ServiceRq\u003e         \u003c/bsf:Inquiry\u003e      \u003c/bsf:GeneralInquiries\u003e   \u003c/soapenv:Body\u003e\u003c/soapenv:Envelope\u003e"
+						}
+					]
+				},
+				"response": {
+					"status": 200,
+					"body": "\u003c?xml version=\"1.0\" encoding=\"utf-8\"?\u003e\u003csoap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\u003e\u003csoap:Body\u003e\u003cGeneralInquiriesResponse xmlns=\"http://BSF.ITD.ECORP.Schemas.InquirySchema\"\u003e\u003cInquiry\u003e\u003cServiceRq xmlns=\"\"\u003e\u003cAccount\u003e\u003cIsIBAN\u003eY\u003c/IsIBAN\u003e\u003cCPT\u003eL10563\u003c/CPT\u003e\u003cSourceSystem\u003eCFT\u003c/SourceSystem\u003e\u003c/Account\u003e\u003c/ServiceRq\u003e\u003cServiceRs xmlns=\"\"\u003e\u003cStatusCode\u003e00\u003c/StatusCode\u003e\u003cStatusDescription\u003eSuccess\u003c/StatusDescription\u003e\u003cAccountDetails\u003e\u003cCPT\u003eL10563\u003c/CPT\u003e\u003cAccountNumber\u003eL1056300356\u003c/AccountNumber\u003e\u003cAccountTitle_EN\u003eTCSCRK C DGTRC LGCW\u003c/AccountTitle_EN\u003e\u003cAccountTitle_AR\u003e*********\u003c/AccountTitle_AR\u003e\u003cCurrency\u003eSAR\u003c/Currency\u003e\u003cOpenDate\u003e2021-06-25\u003c/OpenDate\u003e\u003cProductCode\u003eMPAC\u003c/ProductCode\u003e\u003cAccountType\u003e2140\u003c/AccountType\u003e\u003cAccountStatus\u003eOP\u003c/AccountStatus\u003e\u003cServiceBranch\u003e083\u003c/ServiceBranch\u003e\u003cSequenceNumber\u003e003\u003c/SequenceNumber\u003e\u003cIBAN\u003eSA5655000000000000000000\u003c/IBAN\u003e\u003c/AccountDetails\u003e\u003cAccountDetails\u003e\u003cCPT\u003eL10563\u003c/CPT\u003e\u003cAccountNumber\u003eL1056300162\u003c/AccountNumber\u003e\u003cAccountTitle_EN\u003eTCSCRK C DGTRC LGCW\u003c/AccountTitle_EN\u003e\u003cAccountTitle_AR\u003e*********\u003c/AccountTitle_AR\u003e\u003cCurrency\u003eSAR\u003c/Currency\u003e\u003cOpenDate\u003e2021-02-02\u003c/OpenDate\u003e\u003cProductCode\u003eSIGH\u003c/ProductCode\u003e\u003cAccountType\u003e2150\u003c/AccountType\u003e\u003cAccountStatus\u003eDB\u003c/AccountStatus\u003e\u003cServiceBranch\u003e083\u003c/ServiceBranch\u003e\u003cSequenceNumber\u003e001\u003c/SequenceNumber\u003e\u003cIBAN\u003eSA5655000000000000000000\u003c/IBAN\u003e\u003c/AccountDetails\u003e\u003cAccountDetails\u003e\u003cCPT\u003eL10563\u003c/CPT\u003e\u003cAccountNumber\u003eL1056300259\u003c/AccountNumber\u003e\u003cAccountTitle_EN\u003eTCSCRK C DGTRC LGCW\u003c/AccountTitle_EN\u003e\u003cAccountTitle_AR\u003e*********\u003c/AccountTitle_AR\u003e\u003cCurrency\u003eSAR\u003c/Currency\u003e\u003cOpenDate\u003e2021-03-25\u003c/OpenDate\u003e\u003cProductCode\u003eSC\u003c/ProductCode\u003e\u003cAccountType\u003e2190\u003c/AccountType\u003e\u003cAccountStatus\u003eOP\u003c/AccountStatus\u003e\u003cServiceBranch\u003e083\u003c/ServiceBranch\u003e\u003cSequenceNumber\u003e002\u003c/SequenceNumber\u003e\u003cIBAN\u003eSA5655000000000000000000\u003c/IBAN\u003e\u003c/AccountDetails\u003e\u003c/ServiceRs\u003e\u003c/Inquiry\u003e\u003c/GeneralInquiriesResponse\u003e\u003c/soap:Body\u003e\u003c/soap:Envelope\u003e",
+					"encodedBody": false,
+					"headers": {
+						"Cache-Control": [
+							"private, max-age=0"
+						],
+						"Connection": [
+							"keep-alive"
+						],
+						"Content-Length": [
+							"1931"
+						],
+						"Content-Type": [
+							"text/xml; charset=utf-8"
+						],
+						"Date": [
+							"Mon, 17 Oct 2022 17:59:03 GMT"
+						],
+						"Hoverfly": [
+							"Was-Here"
+						],
+						"Server": [
+							"Microsoft-IIS/8.5"
+						],
+						"Set-Cookie": [
+							"BIGipServerBTS_UAT_Pool=824052234.20480.0000; path=/; Httponly; Secure"
+						],
+						"Via": [
+							"kong/2.8.1.1-enterprise-edition"
+						],
+						"X-Aspnet-Version": [
+							"4.0.30319"
+						],
+						"X-Kong-Proxy-Latency": [
+							"7"
+						],
+						"X-Kong-Upstream-Latency": [
+							"1210"
+						],
+						"X-Powered-By": [
+							"ASP.NET"
+						]
+					},
+					"templated": false
+				}
+			}
+		],
+		"globalActions": {
+			"delays": [],
+			"delaysLogNormal": []
+		}
+	},
+	"meta": {
+		"schemaVersion": "v5.1",
+		"hoverflyVersion": "v1.3.5",
+		"timeExported": "2022-10-17T14:59:53-03:00"
+	}
+}

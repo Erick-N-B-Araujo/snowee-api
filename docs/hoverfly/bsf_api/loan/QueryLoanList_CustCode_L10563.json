@@ -1,0 +1,102 @@
+{
+	"data": {
+		"pairs": [
+			{
+				"request": {
+					"path": [
+						{
+							"matcher": "exact",
+							"value": "/appc/BancsWS/SManageRetailLoanLegacy"
+						}
+					],
+					"method": [
+						{
+							"matcher": "exact",
+							"value": "POST"
+						}
+					],
+					"destination": [
+						{
+							"matcher": "exact",
+							"value": "obp.apidev.bsfneo.com"
+						}
+					],
+					"scheme": [
+						{
+							"matcher": "exact",
+							"value": "https"
+						}
+					],
+					"body": [
+						{
+							"matcher": "exact",
+							"value": "\u003csoapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ret=\"http://com.tcs.bancs.gbp/ManageRetailLoanLegacy/RetailLoanLegacyBaseTypes\" xmlns:typ=\"http://com.tcs.bancs.gbp/common/types\"\u003e   \u003csoapenv:Header/\u003e   \u003csoapenv:Body\u003e      \u003cret:QueryLoanListRequest\u003e         \u003cret:MessageHeader\u003e            \u003ctyp:MessageId\u003e20210420T163109qw\u003c/typ:MessageId\u003e            \u003ctyp:Sender\u003eBSF\u003c/typ:Sender\u003e            \u003ctyp:UserId\u003e1\u003c/typ:UserId\u003e            \u003ctyp:OuId\u003eGBANKBSFOU\u003c/typ:OuId\u003e            \u003ctyp:BranchId\u003e1\u003c/typ:BranchId\u003e            \u003c!--Optional:--\u003e            \u003ctyp:ChannelType\u003e1\u003c/typ:ChannelType\u003e            \u003c!--Optional:--\u003e            \u003ctyp:ServiceMode\u003e1\u003c/typ:ServiceMode\u003e            \u003c!--Optional:--\u003e            \u003ctyp:OperationType\u003e1\u003c/typ:OperationType\u003e         \u003c/ret:MessageHeader\u003e         \u003cret:QueryLoanListInputDetails\u003e            \u003cret:CustomerCode\u003eL10563\u003c/ret:CustomerCode\u003e  \u003c!-- K20294  //  N16539   --\u003e         \u003c/ret:QueryLoanListInputDetails\u003e      \u003c/ret:QueryLoanListRequest\u003e   \u003c/soapenv:Body\u003e\u003c/soapenv:Envelope\u003e"
+						}
+					]
+				},
+				"response": {
+					"status": 200,
+					"body": "\u003c?xml version=\"1.0\" encoding=\"utf-8\"?\u003e\u003csoapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\u003e\u003csoapenv:Body\u003e\u003cns4:QueryLoanListResponse xmlns:ns4=\"http://com.tcs.bancs.gbp/ManageRetailLoanLegacy/RetailLoanLegacyBaseTypes\" xmlns:ns2=\"http://com.tcs.bancs.gbp/common/types\" xmlns:ns3=\"com.tcs.bancs/common/types/IsAlive\"\u003e\u003cns4:QueryLoanListOutputDetails\u003e\u003cns4:QueryLoanList\u003e\u003cns4:LoanAccountNumber\u003e12161075\u003c/ns4:LoanAccountNumber\u003e\u003cns4:LoanReferenceNumber\u003eFPLU1578419\u003c/ns4:LoanReferenceNumber\u003e\u003cns4:MaturityDate\u003e25/04/2026\u003c/ns4:MaturityDate\u003e\u003cns4:LoanType\u003ePF\u003c/ns4:LoanType\u003e\u003cns4:ProductCode\u003eRETR - Tawaroq Financing - Bundle\u003c/ns4:ProductCode\u003e\u003cns4:LoanAmount\u003e120000\u003c/ns4:LoanAmount\u003e\u003cns4:DisbursalDate\u003e20/09/1442 - 02/05/2021\u003c/ns4:DisbursalDate\u003e\u003cns4:NextInstalmentDate\u003e25/08/2021\u003c/ns4:NextInstalmentDate\u003e\u003cns4:FuturePrincipalOS\u003e87499.44\u003c/ns4:FuturePrincipalOS\u003e\u003cns4:NetEarlyTerminationAmount\u003e153537.82\u003c/ns4:NetEarlyTerminationAmount\u003e\u003cns4:AccountStatus\u003eOpen\u003c/ns4:AccountStatus\u003e\u003cns4:CreditAccount\u003eL1056300162\u003c/ns4:CreditAccount\u003e\u003cns4:DebitAccount\u003eL1056300162\u003c/ns4:DebitAccount\u003e\u003cns4:CustomerRate\u003e1.29\u003c/ns4:CustomerRate\u003e\u003cns4:EMI\u003e2129\u003c/ns4:EMI\u003e\u003cns4:DisbursalDateG\u003e02/05/2021\u003c/ns4:DisbursalDateG\u003e\u003cns4:DisbursalDateH\u003e20/09/1442\u003c/ns4:DisbursalDateH\u003e\u003cns4:NextInstalmentDateG\u003e25/08/2021\u003c/ns4:NextInstalmentDateG\u003e\u003cns4:NextInstalmentDateH\u003e17/01/1443\u003c/ns4:NextInstalmentDateH\u003e\u003cns4:DaysPastDue\u003e419\u003c/ns4:DaysPastDue\u003e\u003cns4:RepaymentFrequency\u003eM\u003c/ns4:RepaymentFrequency\u003e\u003cns4:LoanPurpose\u003eCE\u003c/ns4:LoanPurpose\u003e\u003cns4:LastProcessDate\u003e02/05/2021\u003c/ns4:LastProcessDate\u003e\u003cns4:ProfitRate\u003e2.487039\u003c/ns4:ProfitRate\u003e\u003cns4:InternalFundingRate\u003e1.56267\u003c/ns4:InternalFundingRate\u003e\u003cns4:PartOfAHF\u003eN\u003c/ns4:PartOfAHF\u003e\u003cns4:LoanTypeAction\u003eNEW\u003c/ns4:LoanTypeAction\u003e\u003cns4:FutureInterestOS\u003e0\u003c/ns4:FutureInterestOS\u003e\u003cns4:PaidPrincipalPercentage\u003e-22.16\u003c/ns4:PaidPrincipalPercentage\u003e\u003cns4:InstalmentOS\u003e153005.90\u003c/ns4:InstalmentOS\u003e\u003cns4:MisPayAccountNumber\u003e\u003c/ns4:MisPayAccountNumber\u003e\u003cns4:PrincipalOS\u003e0\u003c/ns4:PrincipalOS\u003e\u003cns4:ProfitOS\u003e0\u003c/ns4:ProfitOS\u003e\u003cns4:TotalOS\u003e0\u003c/ns4:TotalOS\u003e\u003cns4:PrincipalOverdue\u003e0\u003c/ns4:PrincipalOverdue\u003e\u003cns4:ProfitOverdue\u003e0\u003c/ns4:ProfitOverdue\u003e\u003cns4:TotalOverdue\u003e0\u003c/ns4:TotalOverdue\u003e\u003cns4:TotalRemaining\u003e0\u003c/ns4:TotalRemaining\u003e\u003cns4:RolloverCount\u003e0\u003c/ns4:RolloverCount\u003e\u003c/ns4:QueryLoanList\u003e\u003cns4:QueryLoanList\u003e\u003cns4:LoanAccountNumber\u003e12161201\u003c/ns4:LoanAccountNumber\u003e\u003cns4:LoanReferenceNumber\u003eRDFU1548674\u003c/ns4:LoanReferenceNumber\u003e\u003cns4:MaturityDate\u003e25/08/2036\u003c/ns4:MaturityDate\u003e\u003cns4:LoanType\u003eHF\u003c/ns4:LoanType\u003e\u003cns4:ProductCode\u003eRDAM - Murabaha Subsidized\u003c/ns4:ProductCode\u003e\u003cns4:LoanAmount\u003e2000000\u003c/ns4:LoanAmount\u003e\u003cns4:DisbursalDate\u003e20/09/1442 - 02/05/2021\u003c/ns4:DisbursalDate\u003e\u003cns4:NextInstalmentDate\u003e25/05/2021\u003c/ns4:NextInstalmentDate\u003e\u003cns4:FuturePrincipalOS\u003e1869613.64\u003c/ns4:FuturePrincipalOS\u003e\u003cns4:NetEarlyTerminationAmount\u003e2438968.56\u003c/ns4:NetEarlyTerminationAmount\u003e\u003cns4:AccountStatus\u003eOpen\u003c/ns4:AccountStatus\u003e\u003cns4:CreditAccount\u003eL1056300259\u003c/ns4:CreditAccount\u003e\u003cns4:DebitAccount\u003eL1056300162\u003c/ns4:DebitAccount\u003e\u003cns4:CustomerRate\u003e2.65\u003c/ns4:CustomerRate\u003e\u003cns4:EMI\u003e15286.23\u003c/ns4:EMI\u003e\u003cns4:DisbursalDateG\u003e02/05/2021\u003c/ns4:DisbursalDateG\u003e\u003cns4:DisbursalDateH\u003e20/09/1442\u003c/ns4:DisbursalDateH\u003e\u003cns4:NextInstalmentDateG\u003e25/05/2021\u003c/ns4:NextInstalmentDateG\u003e\u003cns4:NextInstalmentDateH\u003e13/10/1442\u003c/ns4:NextInstalmentDateH\u003e\u003cns4:DaysPastDue\u003e511\u003c/ns4:DaysPastDue\u003e\u003cns4:RepaymentFrequency\u003eM\u003c/ns4:RepaymentFrequency\u003e\u003cns4:LoanPurpose\u003eCB\u003c/ns4:LoanPurpose\u003e\u003cns4:LastProcessDate\u003e02/05/2021\u003c/ns4:LastProcessDate\u003e\u003cns4:ProfitRate\u003e4.712749\u003c/ns4:ProfitRate\u003e\u003cns4:InternalFundingRate\u003e3.09347\u003c/ns4:InternalFundingRate\u003e\u003cns4:PartOfAHF\u003eN\u003c/ns4:PartOfAHF\u003e\u003cns4:LoanTypeAction\u003eNEW\u003c/ns4:LoanTypeAction\u003e\u003cns4:FutureInterestOS\u003e0\u003c/ns4:FutureInterestOS\u003e\u003cns4:PaidPrincipalPercentage\u003e-6.46\u003c/ns4:PaidPrincipalPercentage\u003e\u003cns4:InstalmentOS\u003e2388230.38\u003c/ns4:InstalmentOS\u003e\u003cns4:MisPayAccountNumber\u003e\u003c/ns4:MisPayAccountNumber\u003e\u003cns4:PrincipalOS\u003e0\u003c/ns4:PrincipalOS\u003e\u003cns4:ProfitOS\u003e0\u003c/ns4:ProfitOS\u003e\u003cns4:TotalOS\u003e0\u003c/ns4:TotalOS\u003e\u003cns4:PrincipalOverdue\u003e0\u003c/ns4:PrincipalOverdue\u003e\u003cns4:ProfitOverdue\u003e0\u003c/ns4:ProfitOverdue\u003e\u003cns4:TotalOverdue\u003e0\u003c/ns4:TotalOverdue\u003e\u003cns4:TotalRemaining\u003e0\u003c/ns4:TotalRemaining\u003e\u003cns4:RolloverCount\u003e0\u003c/ns4:RolloverCount\u003e\u003c/ns4:QueryLoanList\u003e\u003c/ns4:QueryLoanListOutputDetails\u003e\u003c/ns4:QueryLoanListResponse\u003e\u003c/soapenv:Body\u003e\u003c/soapenv:Envelope\u003e",
+					"encodedBody": false,
+					"headers": {
+						"Access-Control-Allow-Origin": [
+							"https://cbsuat.bsf.com/*"
+						],
+						"Connection": [
+							"keep-alive"
+						],
+						"Content-Language": [
+							"en-US"
+						],
+						"Content-Length": [
+							"4224"
+						],
+						"Content-Type": [
+							"text/xml;charset=utf-8"
+						],
+						"Date": [
+							"Mon, 17 Oct 2022 18:09:40 GMT"
+						],
+						"Hoverfly": [
+							"Was-Here"
+						],
+						"Server": [
+							"IBM App Connect Enterprise"
+						],
+						"Set-Cookie": [
+							"BIGipServerBANCS_UAT_POOL=361040394.23323.0000; path=/; Httponly; Secure"
+						],
+						"Strict-Transport-Security": [
+							"max-age=16070400; includeSubDomains; preload"
+						],
+						"Via": [
+							"kong/2.8.1.1-enterprise-edition"
+						],
+						"X-Content-Type-Options": [
+							"nosniff"
+						],
+						"X-Kong-Proxy-Latency": [
+							"7"
+						],
+						"X-Kong-Upstream-Latency": [
+							"1011"
+						],
+						"X-Xss-Protection": [
+							"1; mode=block"
+						]
+					},
+					"templated": false
+				}
+			}
+		],
+		"globalActions": {
+			"delays": [],
+			"delaysLogNormal": []
+		}
+	},
+	"meta": {
+		"schemaVersion": "v5.1",
+		"hoverflyVersion": "v1.3.5",
+		"timeExported": "2022-10-17T15:10:18-03:00"
+	}
+}
