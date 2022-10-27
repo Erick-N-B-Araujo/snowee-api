@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.controller;
 
+import com.snoweegamecorp.backend.model.LoginModel;
 import com.snoweegamecorp.backend.model.actions.user.UserInsert;
 import com.snoweegamecorp.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.snoweegamecorp.backend.repository.UserRepository;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
@@ -77,4 +79,21 @@ public class UserController {
 				})
 				.orElse(null);
 	}
+
+	@PostMapping("/login")
+	public ResponseEntity<LoginModel> authentication(@RequestBody Optional<LoginModel> user){
+		return userService.Login(user)
+				.map(resp -> ResponseEntity.ok(resp))
+				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+						.build());
+	}
+
+	@PostMapping("/signin")
+	public UserModel signin(@Valid @RequestBody UserModel user)
+	{
+		String encodedPass = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPass);
+		return repository.save(user);
+	}
+
 }

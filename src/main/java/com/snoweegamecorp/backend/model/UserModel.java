@@ -19,15 +19,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_users")
 public class UserModel implements UserDetails, Serializable {
+
 	private static final long serialVerionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
@@ -45,8 +48,8 @@ public class UserModel implements UserDetails, Serializable {
 	@Email(message = "Não entrar com email inválido!")
 	private String email;
 	@Column
-	/*@Size(min = 4, max = 8, message = "Password deve ter entre 4 a 8 caracteres")
-	@NotBlank(message = "Campo requerido")*/
+	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
+	@NotBlank(message = "Campo requerido")
 	private String password;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -63,6 +66,13 @@ public class UserModel implements UserDetails, Serializable {
 	@PrePersist
 	public void beforeSave() {
 		setCreatedAt(LocalDateTime.now());
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodedPass = passwordEncoder.encode(getPassword());
+		setPassword(encodedPass);
+	}
+	@PostPersist
+	public void afterSave(){
+
 	}
 	public UserModel(){
 	}

@@ -33,12 +33,13 @@ public class BackendApplication {
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	public Long id = Long.valueOf(1);
+
 	@Bean
 	public CommandLineRunner init() {
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
-				String encodedPass = passwordEncoder.encode("1234");
+				//String encodedPass = passwordEncoder.encode("1234");
 				PermissionModel permissionAdmin = new PermissionModel();
 				permissionAdmin.setPermissionName("ROLE_ADMIN");
 				permissionRepo.save(permissionAdmin);
@@ -49,9 +50,9 @@ public class BackendApplication {
 				UserModel user = new UserModel(
 						id,
 						"Erick",
-						"Erick",
+						"Araujo",
 						"batistasd678@gmail.com",
-						encodedPass,
+						"1234",
 						LocalDateTime.now(),
 						null,
 						permissions
