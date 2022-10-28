@@ -40,16 +40,16 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public Optional<LoginModel> Login(Optional<LoginModel> userLogin){
-        UserModel user = userRepository.findByEmail(userLogin.get().getUsername());
+    public LoginModel Login(LoginModel userLogin){
+        UserModel user = userRepository.findByEmail(userLogin.getUsername());
         if (user != null){
-            if (passwordEncoder.matches(user.getPassword(), userLogin.get().getPassword())){
-                String auth = userLogin.get().getUsername() + ":" + userLogin.get().getPassword();
+            if (passwordEncoder.matches(userLogin.getPassword(),user.getPassword())){
+                String auth = userLogin.getUsername() + ":" + userLogin.getPassword();
                 byte[] encodedAuth = Base64.encode(auth.getBytes(Charset.forName("US-ASCII")));
                 String authHeader = "Basic " + new String(encodedAuth);
-                userLogin.get().setToken(authHeader);
-                userLogin.get().setId(user.getId());
-                userLogin.get().setPermissions(user.getPermissions());
+                userLogin.setToken(authHeader);
+                userLogin.setId(user.getId());
+                userLogin.setPermissions(user.getPermissions());
                 return userLogin;
             }
         }

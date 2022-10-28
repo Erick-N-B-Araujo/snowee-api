@@ -81,11 +81,8 @@ public class UserController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<LoginModel> authentication(@RequestBody Optional<LoginModel> user){
-		return userService.Login(user)
-				.map(resp -> ResponseEntity.ok(resp))
-				.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-						.build());
+	public LoginModel authentication(@RequestBody LoginModel user){
+		return userService.Login(user);
 	}
 
 	@PostMapping("/signin")
