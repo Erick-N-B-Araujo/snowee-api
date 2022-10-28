@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/permissions")
+@RequestMapping("/permissions")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PermissionController {
 

@@ -2,6 +2,7 @@ package com.snoweegamecorp.backend.controller;
 
 import com.snoweegamecorp.backend.model.LoginModel;
 import com.snoweegamecorp.backend.model.actions.user.UserInsert;
+import com.snoweegamecorp.backend.repository.LoginRepository;
 import com.snoweegamecorp.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 	@Autowired
@@ -34,7 +35,6 @@ public class UserController {
 	@PostMapping
 	public UserModel save(@Valid @RequestBody UserModel user)
 	{
-		//return userService.insert(user);
 		String encodedPass = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPass);
 		return repository.save(user);
@@ -72,25 +72,10 @@ public class UserController {
 		return repository
 				.findById(id)
 				.map(user -> {
-					//user.setAdmin(true);
 					user.setUpdatedAt(LocalDateTime.now());
 					repository.save(user);
 					return user;
 				})
 				.orElse(null);
 	}
-
-	@PostMapping("/login")
-	public LoginModel authentication(@RequestBody LoginModel user){
-		return userService.Login(user);
-	}
-
-	@PostMapping("/signin")
-	public UserModel signin(@Valid @RequestBody UserModel user)
-	{
-		String encodedPass = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPass);
-		return repository.save(user);
-	}
-
 }

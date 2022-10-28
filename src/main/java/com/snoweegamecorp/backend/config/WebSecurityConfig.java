@@ -20,9 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Override
     public void configure(WebSecurity web) throws Exception{
-        //web.ignoring().antMatchers("/actuator/**");
+        web.ignoring().antMatchers("/actuator/**");
         //Roda sem autenticação
-        web.ignoring().antMatchers("/**");
+        //web.ignoring().antMatchers("/**");
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -31,8 +31,7 @@ public class LoginModel implements UserDetails,Serializable {
     @GenericGenerator(name= "increment", strategy = "increment")
     private long id;
 
-    @Column(unique = true)
-    @Email(message = "Não entrar com email inválido!")
+    @Column
     private String username;
 
     @Column
@@ -41,7 +40,6 @@ public class LoginModel implements UserDetails,Serializable {
     private String password;
 
     @Column(unique = true)
-    @Email(message = "Não entrar com token inválido!")
     private String token;
 
     @ManyToMany(fetch = FetchType.EAGER)
