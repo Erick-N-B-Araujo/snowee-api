@@ -2,10 +2,7 @@ package com.snoweegamecorp.backend.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.persistence.*;
@@ -69,6 +66,11 @@ public class UserModel implements UserDetails, Serializable {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String encodedPass = passwordEncoder.encode(getPassword());
 		setPassword(encodedPass);
+		if (!getEmail().equals("batistasd678@gmail.com")){
+			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
+			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
+			setPermissions(permissions);
+		}
 	}
 	@PostPersist
 	public void afterSave(){

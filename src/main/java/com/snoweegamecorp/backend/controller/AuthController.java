@@ -1,8 +1,10 @@
 package com.snoweegamecorp.backend.controller;
 
 import com.snoweegamecorp.backend.model.LoginModel;
+import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.LoginRepository;
+import com.snoweegamecorp.backend.repository.PermissionRepository;
 import com.snoweegamecorp.backend.repository.UserRepository;
 import com.snoweegamecorp.backend.service.AuthService;
 import com.snoweegamecorp.backend.service.UserService;
@@ -11,6 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/auth")
@@ -23,6 +28,9 @@ public class AuthController {
     private LoginRepository loginRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
@@ -30,11 +38,15 @@ public class AuthController {
         return authService.Login(userlogin);
     }
 
-    /*@PostMapping("/signin")
+    @PostMapping("/signin")
     public UserModel signin(@Valid @RequestBody UserModel user)
     {
+        PermissionModel permissionOperator = new PermissionModel();
+        permissionOperator.setPermissionName("ROLE_OPERATOR");
+        Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionOperator));
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
+        user.setPermissions(permissions);
         return userRepository.save(user);
-    }*/
+    }
 }

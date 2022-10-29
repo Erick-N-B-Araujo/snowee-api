@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_userlogin")
+@Table(name = "tb_user_login")
 public class LoginModel implements UserDetails,Serializable {
 
     private static final long serialVerionUID = 1L;
@@ -35,17 +35,13 @@ public class LoginModel implements UserDetails,Serializable {
     private String username;
 
     @Column
-    @Size(min = 4, max = 8, message = "Password deve ter entre 4 a 8 caracteres")
-    @NotBlank(message = "Campo requerido")
     private String password;
 
-    @Column(unique = true)
+    @Column
+    @Size(min = 4, max = 500, message = "Token valido")
     private String token;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tb_user_permissions",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id"))
     @JsonIgnoreProperties("users")
     private Set<PermissionModel> permissions = new HashSet<>();
 

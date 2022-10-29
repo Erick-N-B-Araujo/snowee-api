@@ -39,9 +39,11 @@ public class AuthService{
                 //String authHeader = "Basic " + new String(encodedAuth);
                 //userLogin.setToken(authHeader);
                 userLogin.setId(user.getId());
+                String encodedPass = passwordEncoder.encode(userLogin.getPassword());
+                userLogin.setPassword(encodedPass);
                 userLogin.setToken(userLogin.getToken());
                 userLogin.setPermissions(user.getPermissions());
-                //loginRepository.save(userLogin);
+                loginRepository.save(userLogin);
                 return userLogin;
             }
         }
