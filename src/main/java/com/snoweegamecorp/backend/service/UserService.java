@@ -1,13 +1,9 @@
 package com.snoweegamecorp.backend.service;
 
-import com.snoweegamecorp.backend.model.LoginModel;
-import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
-import com.snoweegamecorp.backend.model.actions.user.UserInsert;
 import com.snoweegamecorp.backend.repository.LoginRepository;
 import com.snoweegamecorp.backend.repository.PermissionRepository;
 import com.snoweegamecorp.backend.repository.UserRepository;
-import org.bouncycastle.util.encoders.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.nio.charset.Charset;
-import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {

@@ -28,8 +28,9 @@ public class AuthController {
     private LoginRepository loginRepository;
 
     @Autowired
+    private PermissionRepository permissionRepo;
+    @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -41,12 +42,8 @@ public class AuthController {
     @PostMapping("/signin")
     public UserModel signin(@Valid @RequestBody UserModel user)
     {
-        PermissionModel permissionOperator = new PermissionModel();
-        permissionOperator.setPermissionName("ROLE_OPERATOR");
-        Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionOperator));
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
-        user.setPermissions(permissions);
         return userRepository.save(user);
     }
 }

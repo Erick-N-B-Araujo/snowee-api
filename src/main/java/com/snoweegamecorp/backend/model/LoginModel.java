@@ -9,9 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashSet;
@@ -38,7 +35,6 @@ public class LoginModel implements UserDetails,Serializable {
     private String password;
 
     @Column
-    @Size(min = 4, max = 500, message = "Token valido")
     private String token;
 
     @ManyToMany(fetch = FetchType.EAGER)

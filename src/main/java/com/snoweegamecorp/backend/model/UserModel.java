@@ -62,10 +62,11 @@ public class UserModel implements UserDetails, Serializable {
 	private Set<PermissionModel> permissions = new HashSet<>();
 	@PrePersist
 	public void beforeSave() {
-		setCreatedAt(LocalDateTime.now());
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String encodedPass = passwordEncoder.encode(getPassword());
-		setPassword(encodedPass);
+		if (this.createdAt == null){
+			setCreatedAt(LocalDateTime.now());
+		}
+		setUpdatedAt(LocalDateTime.now());
+
 		if (!getEmail().equals("batistasd678@gmail.com")){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
 			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));

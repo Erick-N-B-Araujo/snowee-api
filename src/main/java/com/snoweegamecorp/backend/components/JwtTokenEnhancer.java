@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.components;
 
+import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,8 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
@@ -21,6 +21,22 @@ public class JwtTokenEnhancer implements TokenEnhancer {
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
+
+        if (oAuth2Authentication.getName().equals("batistasd678@gmail.com")){
+            /*PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
+            Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
+            UserModel user = new UserModel(
+                    2L,
+                    "Erick",
+                    "Araujo",
+                    "batista2sd678@gmail.com",
+                    "1234",
+                    LocalDateTime.now(),
+                    null,
+                    permissions
+            );
+            userRepository.save(user);*/
+        }
         UserModel user = userRepository.findByEmail(oAuth2Authentication.getName());
         Map<String, Object> map = new HashMap<>();
         map.put("userId", user.getId());

@@ -27,7 +27,6 @@ import org.springframework.stereotype.Controller;
 public class BackendApplication {
 	@Autowired
 	private PermissionRepository permissionRepo;
-
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -39,7 +38,7 @@ public class BackendApplication {
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
-				//String encodedPass = passwordEncoder.encode("1234");
+				String encodedPass = passwordEncoder.encode("1234");
 				PermissionModel permissionAdmin = new PermissionModel();
 				permissionAdmin.setPermissionName("ROLE_ADMIN");
 				permissionRepo.save(permissionAdmin);
@@ -52,7 +51,7 @@ public class BackendApplication {
 						"Erick",
 						"Araujo",
 						"batistasd678@gmail.com",
-						"1234",
+						encodedPass,
 						LocalDateTime.now(),
 						null,
 						permissions
