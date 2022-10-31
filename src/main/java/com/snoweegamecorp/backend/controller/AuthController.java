@@ -63,6 +63,12 @@ public class AuthController {
                 .findByUsername(username);
     }
 
+    @GetMapping("/login")
+    public LoginModel getByTopId() {
+        return loginRepository
+                .findTopByOrderByIdDesc();
+    }
+
     @PostMapping("/signin")
     public UserModel signin(@Valid @RequestBody UserModel user)
     {
@@ -71,5 +77,13 @@ public class AuthController {
         return userRepository.save(user);
     }
 
+    @GetMapping("/signin/{id}")
+    public Optional<UserModel> getSignUpByID(@PathVariable Long id) {
+        return userRepository.findById(id);
+    }
+    @GetMapping("/signin/username/{username}")
+    public UserModel getSignUpByUsername(@PathVariable String username) {
+        return userRepository.findByEmail(username);
+    }
 
 }
