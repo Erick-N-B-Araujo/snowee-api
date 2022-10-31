@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -35,11 +38,41 @@ public class LoginModel implements UserDetails,Serializable {
     private String password;
 
     @Column
+    @Size(min = 3, max = 350, message = "Tamanho do token")
     private String token;
+
+    @Column
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime loggedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnoreProperties("users")
     private Set<PermissionModel> permissions = new HashSet<>();
+
+    @PrePersist
+    public void beforeSave() {
+        setLoggedAt(LocalDateTime.now());
+    }
+
+    public LoginModel(long id, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.token = token;
+        this.loggedAt = loggedAt;
+        this.permissions = permissions;
+    }
+
+    public LoginModel(){
+    }
+
+    public LoginModel(LoginModel user){
+        id = user.getId();
+        username = user.getUsername();
+        password = user.getPassword();
+        token = user.getToken();
+        user.getPermissions().forEach(permission -> this.permissions.add(new PermissionModel(permission)));
+    }
 
     public long getId() {
         return id;
@@ -105,5 +138,13 @@ public class LoginModel implements UserDetails,Serializable {
 
     public void setPermissions(Set<PermissionModel> permissions) {
         this.permissions = permissions;
+    }
+
+    public LocalDateTime getLoggedAt() {
+        return loggedAt;
+    }
+
+    public void setLoggedAt(LocalDateTime loggedAt) {
+        this.loggedAt = loggedAt;
     }
 }

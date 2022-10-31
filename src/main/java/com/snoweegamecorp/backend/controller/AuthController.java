@@ -9,12 +9,16 @@ import com.snoweegamecorp.backend.repository.UserRepository;
 import com.snoweegamecorp.backend.service.AuthService;
 import com.snoweegamecorp.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -35,8 +39,28 @@ public class AuthController {
     private BCryptPasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
-    public LoginModel authentication(@RequestBody LoginModel userlogin){
-        return authService.Login(userlogin);
+    public LoginModel authentication(@RequestBody LoginModel userlogin) {
+        LoginModel userLogged = authService.Login(userlogin);
+        return loginRepository.save(userLogged);
+    }
+
+    @PatchMapping("/login/{id}/logged")
+    public LoginModel secondLogin(@PathVariable Long id, @RequestBody LoginModel userlogin){
+        return loginRepository
+                .findById(id)
+                .map(userLogged -> {
+                    userLogged.setLoggedAt(LocalDateTime.now());
+                    userLogged.setToken(userlogin.getToken());
+                    loginRepository.save(userLogged);
+                    return userLogged;
+                })
+                .orElse(null);
+    }
+
+    @GetMapping("/login/{username}")
+    public LoginModel getById(@PathVariable String username) {
+        return loginRepository
+                .findByUsername(username);
     }
 
     @PostMapping("/signin")
@@ -46,4 +70,6 @@ public class AuthController {
         user.setPassword(encodedPass);
         return userRepository.save(user);
     }
+
+
 }

@@ -33,10 +33,9 @@ public class AuthService{
             if (passwordEncoder.matches(userLogin.getPassword(),user.getPassword())){
                 userLogin.setId(user.getId());
                 String encodedPass = passwordEncoder.encode(userLogin.getPassword());
+                userLogin.setId(user.getId());
                 userLogin.setPassword(encodedPass);
-                userLogin.setToken(userLogin.getToken());
                 userLogin.setPermissions(user.getPermissions());
-                loginRepository.save(userLogin);
                 return userLogin;
             }
         }
