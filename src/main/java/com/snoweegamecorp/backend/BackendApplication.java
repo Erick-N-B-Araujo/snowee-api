@@ -56,7 +56,7 @@ public class BackendApplication {
 						null,
 						permissions
 				);
-				userRepository.save(user);
+				//userRepository.save(user);
 			}
 		};
 	}

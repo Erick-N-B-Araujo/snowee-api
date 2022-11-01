@@ -76,11 +76,11 @@ public class AuthController {
         user.setPassword(encodedPass);
         return userRepository.save(user);
     }
-
     @GetMapping("/signin/{id}")
     public Optional<UserModel> getSignUpByID(@PathVariable Long id) {
         return userRepository.findById(id);
     }
+
     @GetMapping("/signin/username/{username}")
     public UserModel getSignUpByUsername(@PathVariable String username) {
         return userRepository.findByEmail(username);

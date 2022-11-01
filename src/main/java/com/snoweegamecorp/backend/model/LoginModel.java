@@ -32,6 +32,9 @@ public class LoginModel implements UserDetails,Serializable {
     private long id;
 
     @Column
+    private String firstname;
+
+    @Column
     private String username;
 
     @Column
@@ -54,8 +57,9 @@ public class LoginModel implements UserDetails,Serializable {
         setLoggedAt(LocalDateTime.now());
     }
 
-    public LoginModel(long id, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
+    public LoginModel(long id, String firstname, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
         this.id = id;
+        this.firstname = firstname;
         this.username = username;
         this.password = password;
         this.token = token;
@@ -68,6 +72,7 @@ public class LoginModel implements UserDetails,Serializable {
 
     public LoginModel(LoginModel user){
         id = user.getId();
+        firstname = user.getFirstname();
         username = user.getUsername();
         password = user.getPassword();
         token = user.getToken();
@@ -146,5 +151,13 @@ public class LoginModel implements UserDetails,Serializable {
 
     public void setLoggedAt(LocalDateTime loggedAt) {
         this.loggedAt = loggedAt;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 }
