@@ -1,9 +1,9 @@
 package com.snoweegamecorp.backend.resources.exceptions;
 
-public class EntityNotFoundException extends RuntimeException{
+public class DatabaseException extends RuntimeException{
     private static final long serialVerionUID = 1L;
 
-    public EntityNotFoundException(String msg){
+    public DatabaseException(String msg){
         super(msg);
     }
 }

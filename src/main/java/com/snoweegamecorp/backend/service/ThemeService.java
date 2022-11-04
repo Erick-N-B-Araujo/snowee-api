@@ -3,15 +3,18 @@ package com.snoweegamecorp.backend.service;
 import com.snoweegamecorp.backend.dto.ThemeDTO;
 import com.snoweegamecorp.backend.model.ThemeModel;
 import com.snoweegamecorp.backend.repository.ThemeRepository;
-import com.snoweegamecorp.backend.resources.exceptions.EntityNotFoundException;
+import com.snoweegamecorp.backend.resources.exceptions.DatabaseException;
+import com.snoweegamecorp.backend.resources.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ThemeService {
@@ -20,13 +23,10 @@ public class ThemeService {
     private ThemeRepository themeRepository;
 
     @Transactional(readOnly = true)
-    public List<ThemeDTO> findall(){
-        List<ThemeModel> list = themeRepository.findAll();
+    public Page<ThemeDTO> findAllPaged(PageRequest pageRequest){
+        Page<ThemeModel> listPaged = themeRepository.findAll(pageRequest);
 
-        return list
-                .stream()
-                .map(x -> new ThemeDTO(x))
-                .collect(Collectors.toList());
+        return listPaged.map(x -> new ThemeDTO(x));
     }
 
     @Transactional(readOnly = true)
@@ -34,16 +34,40 @@ public class ThemeService {
         Optional<ThemeModel> objTheme = themeRepository.findById(id);
         ThemeModel theme = objTheme
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Entity not found")
+                        () -> new ResourceNotFoundException("Entity not found")
                 );
         return  new ThemeDTO(theme);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public ThemeDTO insert(ThemeDTO dto) {
         ThemeModel theme = new ThemeModel();
         theme.setName(dto.getName());
         theme = themeRepository.save(theme);
         return new ThemeDTO(theme);
+    }
+
+    @Transactional
+    public ThemeDTO update(Long id, ThemeDTO dto) {
+        try {
+            ThemeModel theme = themeRepository.getOne(id);
+            theme.setName(dto.getName());
+            theme = themeRepository.save(theme);
+            return new ThemeDTO(theme);
+        } catch (EntityNotFoundException e){
+            throw new ResourceNotFoundException("Id not found: " + id);
+        } catch (DataIntegrityViolationException d){
+            throw new DatabaseException("Integrity violation: "+ d);
+        }
+    }
+
+    public void delete(Long id){
+        try {
+            themeRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e){
+            throw new ResourceNotFoundException("Id not found: " + id);
+        } catch (DataIntegrityViolationException d){
+            throw new DatabaseException("Integrity violation: "+ d);
+        }
     }
 }
