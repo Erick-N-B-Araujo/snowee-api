@@ -25,7 +25,6 @@ public class ThemeService {
     @Transactional(readOnly = true)
     public Page<ThemeDTO> findAllPaged(PageRequest pageRequest){
         Page<ThemeModel> listPaged = themeRepository.findAll(pageRequest);
-
         return listPaged.map(x -> new ThemeDTO(x));
     }
 
