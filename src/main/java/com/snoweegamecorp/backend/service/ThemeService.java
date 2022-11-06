@@ -1,7 +1,6 @@
 package com.snoweegamecorp.backend.service;
 
-import com.snoweegamecorp.backend.dto.ThemeDTO;
-import com.snoweegamecorp.backend.model.ThemeModel;
+import com.snoweegamecorp.backend.model.Theme;
 import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.resources.exceptions.DatabaseException;
 import com.snoweegamecorp.backend.resources.exceptions.ResourceNotFoundException;
@@ -23,36 +22,31 @@ public class ThemeService {
     private ThemeRepository themeRepository;
 
     @Transactional(readOnly = true)
-    public Page<ThemeDTO> findAllPaged(PageRequest pageRequest){
-        Page<ThemeModel> listPaged = themeRepository.findAll(pageRequest);
-        return listPaged.map(x -> new ThemeDTO(x));
+    public Page<Theme> findAllPaged(PageRequest pageRequest){
+        Page<Theme> listPaged = themeRepository.findAll(pageRequest);
+        return listPaged.map(x -> new Theme(x));
     }
 
     @Transactional(readOnly = true)
-    public ThemeDTO findById(Long id) {
-        Optional<ThemeModel> objTheme = themeRepository.findById(id);
-        ThemeModel theme = objTheme
+    public Theme findById(Long id) {
+        Optional<Theme> objTheme = themeRepository.findById(id);
+        return objTheme
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Entity not found")
                 );
-        return  new ThemeDTO(theme);
     }
 
     @Transactional
-    public ThemeDTO insert(ThemeDTO dto) {
-        ThemeModel theme = new ThemeModel();
-        theme.setName(dto.getName());
-        theme = themeRepository.save(theme);
-        return new ThemeDTO(theme);
+    public Theme insert(Theme theme) {
+        return themeRepository.save(theme);
     }
 
     @Transactional
-    public ThemeDTO update(Long id, ThemeDTO dto) {
+    public Theme update(Long id, Theme theme) {
         try {
-            ThemeModel theme = themeRepository.getOne(id);
-            theme.setName(dto.getName());
-            theme = themeRepository.save(theme);
-            return new ThemeDTO(theme);
+            Theme themeFound = themeRepository.getOne(id);
+            themeFound.setName(theme.getName());
+            return themeRepository.save(themeFound);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found: " + id);
         } catch (DataIntegrityViolationException d){

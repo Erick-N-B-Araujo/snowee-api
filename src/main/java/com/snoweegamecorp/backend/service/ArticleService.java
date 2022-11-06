@@ -1,8 +1,9 @@
 package com.snoweegamecorp.backend.service;
 
-import com.snoweegamecorp.backend.dto.ArticleDTO;
-import com.snoweegamecorp.backend.model.ArticleModel;
+import com.snoweegamecorp.backend.model.Article;
+import com.snoweegamecorp.backend.model.Theme;
 import com.snoweegamecorp.backend.repository.ArticleRepository;
+import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.resources.exceptions.DatabaseException;
 import com.snoweegamecorp.backend.resources.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ArticleService {
@@ -22,43 +23,55 @@ public class ArticleService {
     @Autowired
     private ArticleRepository articleRepository;
 
+    @Autowired
+    private ThemeRepository themeRepository;
+
     @Transactional(readOnly = true)
-    public Page<ArticleDTO> findAllPaged(PageRequest pageRequest){
-        Page<ArticleModel> listPaged = articleRepository.findAll(pageRequest);
-        return listPaged.map(x -> new ArticleDTO(x));
+    public Page<Article> findAllPaged(PageRequest pageRequest){
+        Page<Article> listPaged = articleRepository.findAll(pageRequest);
+        return listPaged.map(x -> new Article(x));
     }
 
     @Transactional(readOnly = true)
-    public ArticleDTO findById(Long id) {
-        Optional<ArticleModel> objTheme = articleRepository.findById(id);
-        ArticleModel theme = objTheme
+    public Article findById(Long id) {
+        Optional<Article> objArticle = articleRepository.findById(id);
+        return  objArticle
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Entity not found")
                 );
-        return  new ArticleDTO(theme);
     }
 
     @Transactional
-    public ArticleDTO insert(ArticleDTO dto) {
-        ArticleModel article = new ArticleModel();
-        article.setTitle(dto.getTitle());
-        article.setArticleText(dto.getArticleText());
-        article.setImgUrl(dto.getImgUrl());
-        article.setCreatedAt(dto.getCreatedAt());
-        article = articleRepository.save(article);
-        return new ArticleDTO(article);
+    public Article insert(Article articleReq) {
+        Article article = new Article();
+        article.setTitle(article.getTitle());
+        article.setArticleText(articleReq.getArticleText());
+        article.setCreatedAt(articleReq.getCreatedAt());
+        article.setImgUrl(articleReq.getImgUrl());
+        Set<Theme> themeList = new HashSet<>();
+        for (Theme theme: articleReq.getThemes()){
+            theme = themeRepository.getOne(theme.getId());
+            themeList.add(theme);
+        }
+        article.setThemes(themeList);
+        return articleRepository.save(articleReq);
     }
 
     @Transactional
-    public ArticleDTO update(Long id, ArticleDTO dto) {
+    public Article update(Long id, Article articleReq) {
         try {
-            ArticleModel article = articleRepository.getOne(id);
-            article.setTitle(dto.getTitle());
-            article.setArticleText(dto.getArticleText());
-            article.setImgUrl(dto.getImgUrl());
-            article.setCreatedAt(dto.getCreatedAt());
-            article = articleRepository.save(article);
-            return new ArticleDTO(article);
+            Article article = articleRepository.getOne(id);
+            article.setTitle(articleReq.getTitle());
+            article.setArticleText(articleReq.getArticleText());
+            article.setCreatedAt(articleReq.getCreatedAt());
+            article.setImgUrl(articleReq.getImgUrl());
+            Set<Theme> themeList = new HashSet<>();
+            for (Theme theme: articleReq.getThemes()){
+                theme = themeRepository.getOne(theme.getId());
+                themeList.add(theme);
+            }
+            article.setThemes(themeList);
+            return articleRepository.save(article);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found: " + id);
         } catch (DataIntegrityViolationException d){

@@ -9,16 +9,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_articles")
-public class ArticleModel implements Serializable {
+public class Article implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVerionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -40,17 +39,39 @@ public class ArticleModel implements Serializable {
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "theme_id"))
     @JsonIgnoreProperties("articles")
-    Set<ThemeModel> themes = new HashSet<>();
+    Set<Theme> themes;
 
-    public ArticleModel(){
+    @PrePersist
+    public void beforeSave() {
+        setCreatedAt(Instant.now());
     }
 
-    public ArticleModel(Long id, String title, String articleText, String imgUrl, Instant createdAt) {
+    public Article(){}
+
+    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt) {
         this.id = id;
         this.title = title;
         this.articleText = articleText;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
+    }
+
+    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt, Set<Theme> themes) {
+        this.id = id;
+        this.title = title;
+        this.articleText = articleText;
+        this.imgUrl = imgUrl;
+        this.createdAt = createdAt;
+        this.themes = themes;
+    }
+
+    public Article(Article article) {
+        this.id = article.getId();
+        this.title = article.getTitle();
+        this.articleText = article.getArticleText();
+        this.imgUrl = article.getImgUrl();
+        this.createdAt = article.getCreatedAt();
+        this.themes = article.getThemes();
     }
 
     public Long getId() {
@@ -93,20 +114,11 @@ public class ArticleModel implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Set<ThemeModel> getThemes() {
+    public Set<Theme> getThemes() {
         return themes;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof ArticleModel)) return false;
-        ArticleModel that = (ArticleModel) o;
-        return Objects.equals(getId(), that.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
+    public void setThemes(Set<Theme> themes) {
+        this.themes = themes;
     }
 }

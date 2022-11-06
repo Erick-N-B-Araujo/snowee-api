@@ -1,7 +1,6 @@
 package com.snoweegamecorp.backend.controller;
 
-import com.snoweegamecorp.backend.dto.ThemeDTO;
-import com.snoweegamecorp.backend.model.ThemeModel;
+import com.snoweegamecorp.backend.model.Theme;
 import com.snoweegamecorp.backend.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,8 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/themes")
@@ -25,7 +22,7 @@ public class ThemeController {
 
 
     @GetMapping
-    public ResponseEntity<Page<ThemeDTO>> findAll(
+    public ResponseEntity<Page<Theme>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -33,37 +30,37 @@ public class ThemeController {
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        Page<ThemeDTO> themes = themeService.findAllPaged(pageRequest);
+        Page<Theme> themes = themeService.findAllPaged(pageRequest);
 
         return ResponseEntity.ok().body(themes);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ThemeDTO> findById(@PathVariable Long id){
-        ThemeDTO theme = themeService.findById(id);
+    public ResponseEntity<Theme> findById(@PathVariable Long id){
+        Theme theme = themeService.findById(id);
         return ResponseEntity.ok().body(theme);
     }
 
     @PostMapping()
-    public ResponseEntity<ThemeDTO> insert(@RequestBody ThemeDTO dto){
-        dto = themeService.insert(dto);
+    public ResponseEntity<Theme> insert(@RequestBody Theme theme){
+        theme = themeService.insert(theme);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(theme.getId())
                 .toUri();
 
         return ResponseEntity
                 .created(uri)
-                .body(dto);
+                .body(theme);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<ThemeDTO> update(@PathVariable Long id, @RequestBody ThemeDTO dto){
-        dto = themeService.update(id, dto);
+    public ResponseEntity<Theme> update(@PathVariable Long id, @RequestBody Theme theme){
+        theme = themeService.update(id, theme);
         return ResponseEntity
                 .ok()
-                .body(dto);
+                .body(theme);
     }
 
     @DeleteMapping(value = "/{id}")
