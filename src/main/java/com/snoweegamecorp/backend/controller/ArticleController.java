@@ -1,6 +1,8 @@
 package com.snoweegamecorp.backend.controller;
 
 import com.snoweegamecorp.backend.model.Article;
+import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.repository.ArticleRepository;
 import com.snoweegamecorp.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/articles")
@@ -19,6 +22,9 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleRepository articleRepository;
 
     @GetMapping
     public ResponseEntity<Page<Article>> findAll(
@@ -38,6 +44,12 @@ public class ArticleController {
     public ResponseEntity<Article> findById(@PathVariable Long id){
         Article article = articleService.findById(id);
         return ResponseEntity.ok().body(article);
+    }
+
+    @GetMapping(value = "/list-all")
+    public ResponseEntity<List<Article>> findListAll(){
+        List<Article> articles= articleRepository.findAll();
+        return ResponseEntity.ok().body(articles);
     }
 
     @PostMapping()

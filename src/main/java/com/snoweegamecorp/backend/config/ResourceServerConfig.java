@@ -23,9 +23,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    private static final String[] PUBLIC = {"/oauth/token", "/auth/**", "/h2-console/**"};
-    private static final String[] OPERATOR_OR_ADMIN = {"/users/**"};
-    private static final String[] ADMIN = {"/users/**","/permissions/**", "/themes"};
+    private static final String[] PUBLIC = {"/oauth/token", "/auth/**", "/h2-console/**", "/themes/list-all", "/articles/list-all"};
+    private static final String[] OPERATOR_OR_ADMIN = {"/users/**", "/themes/**"};
+    private static final String[] ADMIN = {"/users/**","/permissions/**", "/themes/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {

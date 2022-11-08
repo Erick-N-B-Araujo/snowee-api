@@ -1,6 +1,7 @@
 package com.snoweegamecorp.backend.controller;
 
 import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/themes")
@@ -20,6 +23,8 @@ public class ThemeController {
     @Autowired
     private ThemeService themeService;
 
+    @Autowired
+    private ThemeRepository themeRepository;
 
     @GetMapping
     public ResponseEntity<Page<Theme>> findAll(
@@ -39,6 +44,12 @@ public class ThemeController {
     public ResponseEntity<Theme> findById(@PathVariable Long id){
         Theme theme = themeService.findById(id);
         return ResponseEntity.ok().body(theme);
+    }
+
+    @GetMapping(value = "/list-all")
+    public ResponseEntity<List<Theme>> findListAll(){
+        List<Theme> themes= themeRepository.findAll();
+        return ResponseEntity.ok().body(themes);
     }
 
     @PostMapping()
