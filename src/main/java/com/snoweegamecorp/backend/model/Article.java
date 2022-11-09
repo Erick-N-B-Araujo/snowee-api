@@ -34,6 +34,10 @@ public class Article implements Serializable {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
 
+    @ManyToOne
+    @JsonIgnoreProperties("articles")
+    private LoginModel user;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_article_themes",
             joinColumns = @JoinColumn(name = "article_id"),
@@ -56,12 +60,13 @@ public class Article implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt, Set<Theme> themes) {
+    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt, LoginModel user, Set<Theme> themes) {
         this.id = id;
         this.title = title;
         this.articleText = articleText;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
+        this.user = user;
         this.themes = themes;
     }
 
@@ -71,6 +76,7 @@ public class Article implements Serializable {
         this.articleText = article.getArticleText();
         this.imgUrl = article.getImgUrl();
         this.createdAt = article.getCreatedAt();
+        this.user = article.getUser();
         this.themes = article.getThemes();
     }
 
@@ -120,5 +126,13 @@ public class Article implements Serializable {
 
     public void setThemes(Set<Theme> themes) {
         this.themes = themes;
+    }
+
+    public LoginModel getUser() {
+        return user;
+    }
+
+    public void setUser(LoginModel user) {
+        this.user = user;
     }
 }

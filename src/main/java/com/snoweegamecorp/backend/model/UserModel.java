@@ -60,6 +60,7 @@ public class UserModel implements UserDetails, Serializable {
 				inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	@JsonIgnoreProperties("users")
 	private Set<PermissionModel> permissions = new HashSet<>();
+
 	@PrePersist
 	public void beforeSave() {
 		if (this.createdAt == null){

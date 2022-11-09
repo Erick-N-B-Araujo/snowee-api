@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,9 @@ public class LoginModel implements UserDetails,Serializable {
     private String firstname;
 
     @Column
+    private String lastname;
+
+    @Column
     private String username;
 
     @Column
@@ -52,14 +56,19 @@ public class LoginModel implements UserDetails,Serializable {
     @JsonIgnoreProperties("users")
     private Set<PermissionModel> permissions = new HashSet<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("user")
+    private List<Article> articles;
+
     @PrePersist
     public void beforeSave() {
         setLoggedAt(LocalDateTime.now());
     }
 
-    public LoginModel(long id, String firstname, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
+    public LoginModel(long id, String firstname, String lastname, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
         this.id = id;
         this.firstname = firstname;
+        this.lastname = lastname;
         this.username = username;
         this.password = password;
         this.token = token;
@@ -73,6 +82,7 @@ public class LoginModel implements UserDetails,Serializable {
     public LoginModel(LoginModel user){
         id = user.getId();
         firstname = user.getFirstname();
+        lastname = user.getLastname();
         username = user.getUsername();
         password = user.getPassword();
         token = user.getToken();
@@ -159,5 +169,21 @@ public class LoginModel implements UserDetails,Serializable {
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public List<Article> getArticles() {
+        return articles;
+    }
+
+    public void setArticles(List<Article> articles) {
+        this.articles = articles;
     }
 }

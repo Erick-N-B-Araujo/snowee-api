@@ -34,6 +34,8 @@ public class AuthService{
                 userLogin.setId(user.getId());
                 String encodedPass = passwordEncoder.encode(userLogin.getPassword());
                 userLogin.setId(user.getId());
+                userLogin.setFirstname(user.getFirstName());
+                userLogin.setLastname(user.getLastName());
                 userLogin.setPassword(encodedPass);
                 userLogin.setPermissions(user.getPermissions());
                 return userLogin;
