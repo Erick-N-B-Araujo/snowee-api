@@ -59,9 +59,10 @@ public class ArticleService {
         try {
             Article article = articleRepository.getOne(id);
             article.setTitle(articleReq.getTitle());
+            article.setDescriptionText(article.getDescriptionText());
             article.setArticleText(articleReq.getArticleText());
-            article.setCreatedAt(articleReq.getCreatedAt());
             article.setImgUrl(articleReq.getImgUrl());
+            article.setUser(articleReq.getUser());
             Set<Theme> themeList = new HashSet<>();
             for (Theme theme: articleReq.getThemes()){
                 theme = themeRepository.getOne(theme.getId());

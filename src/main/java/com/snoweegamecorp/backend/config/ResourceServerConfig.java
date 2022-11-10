@@ -23,9 +23,11 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Autowired
     private Environment env;
 
-    private static final String[] PUBLIC = {"/oauth/token", "/auth/**", "/h2-console/**", "/themes/list-all", "/articles/list-all"};
-    private static final String[] OPERATOR_OR_ADMIN = {"/users/**", "/themes/**"};
-    private static final String[] ADMIN = {"/users/**","/permissions/**", "/themes/**"};
+    private static final String[] AUTH = {"/oauth/token", "/auth/**", "/h2-console/**"};
+    private static final String[] PUBLIC = {"/themes/list-all", "/articles/list-all", "/themes/**", "/articles/**"};
+
+    private static final String[] OPERATOR_OR_ADMIN = {"/users/**", "/themes/**", "/articles/**"};
+    private static final String[] ADMIN = {"/users/**","/permissions/**", "/themes/**", "/articles/**"};
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
@@ -41,7 +43,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         }
 
         http.authorizeRequests()
-                .antMatchers(PUBLIC).permitAll()
+                .antMatchers(AUTH).permitAll()
+                .antMatchers(HttpMethod.GET, PUBLIC).permitAll()
                 .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR","ADMIN")
                 .antMatchers(ADMIN).hasRole("ADMIN")
