@@ -27,6 +27,12 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @GetMapping
+    public ResponseEntity<List<Article>> findListAll(){
+        List<Article> articles= articleRepository.findAll();
+        return ResponseEntity.ok().body(articles);
+    }
+
+    @GetMapping(value = "/list-all")
     public ResponseEntity<Page<Article>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
@@ -46,32 +52,26 @@ public class ArticleController {
         return ResponseEntity.ok().body(article);
     }
 
-    @GetMapping(value = "/list-all")
-    public ResponseEntity<List<Article>> findListAll(){
-        List<Article> articles= articleRepository.findAll();
-        return ResponseEntity.ok().body(articles);
-    }
-
     @PostMapping()
-    public ResponseEntity<Article> insert(@RequestBody Article dto){
-        dto = articleService.insert(dto);
+    public ResponseEntity<Article> insert(@RequestBody Article article){
+        article = articleService.insert(article);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(dto.getId())
+                .buildAndExpand(article.getId())
                 .toUri();
 
         return ResponseEntity
                 .created(uri)
-                .body(dto);
+                .body(article);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody Article dto){
-        dto = articleService.update(id, dto);
+    public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody Article article){
+        article = articleService.update(id, article);
         return ResponseEntity
                 .ok()
-                .body(dto);
+                .body(article);
     }
 
     @DeleteMapping(value = "/{id}")

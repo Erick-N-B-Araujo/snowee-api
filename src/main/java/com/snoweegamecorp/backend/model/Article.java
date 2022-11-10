@@ -27,12 +27,18 @@ public class Article implements Serializable {
     private String title;
 
     @Column(columnDefinition = "TEXT")
+    private String descriptionText;
+
+    @Column(columnDefinition = "TEXT")
     private String articleText;
 
     private String imgUrl;
 
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updatedAt;
 
     @ManyToOne
     @JsonIgnoreProperties("articles")
@@ -47,25 +53,32 @@ public class Article implements Serializable {
 
     @PrePersist
     public void beforeSave() {
-        setCreatedAt(Instant.now());
+        if (getCreatedAt() == null){
+            setCreatedAt(Instant.now());
+        }
+        setUpdatedAt(Instant.now());
     }
 
     public Article(){}
 
-    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt) {
+    public Article(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;
+        this.descriptionText = descriptionText;
         this.articleText = articleText;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
-    public Article(Long id, String title, String articleText, String imgUrl, Instant createdAt, LoginModel user, Set<Theme> themes) {
+    public Article(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt,LoginModel user, Set<Theme> themes) {
         this.id = id;
         this.title = title;
+        this.descriptionText = descriptionText;
         this.articleText = articleText;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.user = user;
         this.themes = themes;
     }
@@ -73,9 +86,11 @@ public class Article implements Serializable {
     public Article(Article article) {
         this.id = article.getId();
         this.title = article.getTitle();
+        this.descriptionText = article.getDescriptionText();
         this.articleText = article.getArticleText();
         this.imgUrl = article.getImgUrl();
         this.createdAt = article.getCreatedAt();
+        this.updatedAt = article.getUpdatedAt();
         this.user = article.getUser();
         this.themes = article.getThemes();
     }
@@ -134,5 +149,21 @@ public class Article implements Serializable {
 
     public void setUser(LoginModel user) {
         this.user = user;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getDescriptionText() {
+        return descriptionText;
+    }
+
+    public void setDescriptionText(String descriptionText) {
+        this.descriptionText = descriptionText;
     }
 }

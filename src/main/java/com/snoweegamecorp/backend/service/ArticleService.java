@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -43,11 +44,7 @@ public class ArticleService {
 
     @Transactional
     public Article insert(Article articleReq) {
-        Article article = new Article();
-        article.setTitle(article.getTitle());
-        article.setArticleText(articleReq.getArticleText());
-        article.setCreatedAt(articleReq.getCreatedAt());
-        article.setImgUrl(articleReq.getImgUrl());
+        Article article = new Article(articleReq);
         Set<Theme> themeList = new HashSet<>();
         for (Theme theme: articleReq.getThemes()){
             theme = themeRepository.getOne(theme.getId());
