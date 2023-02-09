@@ -1,0 +1,5 @@
+version: '3'
+services:
+  springboot:
+    image: "ericknbaraujo/snoweegamecorp:latest"
+    container_name: snowee-api
