@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORKSPACE=/var/jenkins_home/workspace/snowee-api
+WORKSPACE=/home/jenkins/snoweegamecorp/jenkins-data/jenkins_home/workspace/snowee-api
 
 # Copy the new jar to the build location
 cp -f $WORKSPACE/java-app/target/*.jar $WORKSPACE/scripts/build/
