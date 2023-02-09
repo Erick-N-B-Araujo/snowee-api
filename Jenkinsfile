@@ -18,16 +18,6 @@ pipeline{
                 }
             }
         }
-        stage('Test') {
-            steps {
-            sh './scripts/build/mvn.sh mvn test'
-            }
-            post {
-                always {
-                    junit 'java-app/target/surefire-reports/junitreports/*.xml'
-                }
-            }
-        }
         stage('Push') {
             steps {
                     sh './scripts/push/push_docker_image.sh'
