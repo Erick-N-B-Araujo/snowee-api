@@ -8,7 +8,6 @@ pipeline{
         stage('Build') {
             steps {
             sh '''
-                ./scripts/build/copy_resources.sh
                 ./scripts/build/mvn.sh mvn clean package -DskipTests
                 ./scripts/build/build_docker_image.sh 
             '''
