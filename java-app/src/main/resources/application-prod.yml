@@ -4,8 +4,19 @@ app:
   message: This is the property file to the ${spring.application.name} specific for PROD environment
 
 spring:
+  hikari:
+    connection-test-query: SELECT 1
+    minimum-idle: 1
+    maximum-pool-size: 10
+    pool-name: snowee-database
+    auto-commit: FALSE
+    connection-timeout: 30000
   datasource:
-    url: ${JDBC_DATASOURCE_URL}
+    url: jdbc:postgresql://localhost:5432/dbsnowee
+    driverClassName: org.postgresql.Driver
+    platform: postgres
+    username: postgres
+    password: snowee
   jpa:
     generate-ddl: true
     show-sql: true

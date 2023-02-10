@@ -4,3 +4,4 @@ target/
 *.ctb~
 docs/Anotations.ctb~~
 docs/Anotations.ctb~~~
+postgres-data/
