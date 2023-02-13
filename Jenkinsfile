@@ -1,7 +1,5 @@
 pipeline{
-    agent {
-        label 'mestre'
-    }
+    agent none
 
 	environment {
 		PASS = credentials('dockerhub-pass')
