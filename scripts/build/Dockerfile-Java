@@ -4,4 +4,4 @@ RUN mkdir /app
 
 COPY *.jar /app/app.jar
 
-CMD mvn spring-boot:run
+CMD java -jar /app/app.jar
