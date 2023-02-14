@@ -18,9 +18,17 @@ services:
 
   backend:
     container_name: snowee-api
-    image: ericknbaraujo/snoweegamecorp:latest
+    build: .
+    working_dir: /java-app
+    environment:
+      TZ: America/Sao_Paulo
+      SPRING_BOOT_ENVIRONMENT: Production
+    volumes:
+      - ./java-app:/java-app
+      - ~/.m2:/root/.m2
     ports:
       - "9000:8080"
+    command: mvn clean spring-boot:run
     links:
       - database
     depends_on:

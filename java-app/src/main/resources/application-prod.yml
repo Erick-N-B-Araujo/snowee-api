@@ -12,7 +12,7 @@ spring:
     auto-commit: FALSE
     connection-timeout: 30000
   datasource:
-    url: jdbc:postgresql://localhost:5432/dbsnowee
+    url: jdbc:postgresql://191.96.251.3:5432/dbsnowee
     driverClassName: org.postgresql.Driver
     platform: postgres
     username: postgres
