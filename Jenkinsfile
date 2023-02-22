@@ -10,7 +10,6 @@ pipeline{
             steps {
             sh '''
                 ./scripts/build/mvn.sh mvn clean package -DskipTests
-                ./scripts/build/build_docker_image.sh 
             '''
             }
             post {
@@ -19,14 +18,9 @@ pipeline{
                 }
             }
         }
-        stage('Push') {
-            steps {
-                    sh './scripts/push/push_docker_image.sh'
-                }	
-        }
         stage('Deploy') {
                 steps {
-                    sh './scripts/deploy/deploy_app.sh'
+                    sh 'docker-compose up -d'
                 }
         }
     }
