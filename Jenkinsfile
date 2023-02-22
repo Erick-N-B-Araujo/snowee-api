@@ -9,6 +9,7 @@ pipeline{
         stage('Build') {
             steps {
             sh '''
+                ./scripts/deploy/stop_app.sh
                 ./scripts/build/mvn.sh mvn clean package -DskipTests
             '''
             }
