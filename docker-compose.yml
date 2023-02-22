@@ -18,6 +18,7 @@ services:
 
   api:
     container_name: backend
+    image: snoweegamecorp
     build: .
     working_dir: /java-app
     environment:

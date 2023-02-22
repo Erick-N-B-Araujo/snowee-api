@@ -23,6 +23,11 @@ pipeline{
                     sh './scripts/clean/clean_dump.sh'
                 }
         }
+        stage('Push') {
+            steps {
+                    sh './scripts/push/push_docker_image.sh'
+                }	
+        }
         stage('Deploy') {
                 steps {
                     sh './scripts/deploy/deploy_app.sh'
