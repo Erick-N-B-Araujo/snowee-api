@@ -18,9 +18,14 @@ pipeline{
                 }
             }
         }
+        stage('Clean-UP') {
+                steps {
+                    sh './scripts/clean/clean_dump.sh'
+                }
+        }
         stage('Deploy') {
                 steps {
-                    sh 'docker-compose up -d'
+                    sh './scripts/deploy/deploy_app.sh'
                 }
         }
     }
