@@ -1,6 +1,7 @@
 pipeline{
-    agent any
-
+    agent {
+        label 'agent-jenkins'
+    }
 	environment {
 		PASS = credentials('dockerhub-pass')
 	}

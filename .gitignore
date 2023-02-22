@@ -5,3 +5,5 @@ target/
 docs/Anotations.ctb~~
 docs/Anotations.ctb~~~
 postgres-data/
+core.*
+hs_err_pid*

@@ -16,8 +16,8 @@ services:
       - snoweenet
     restart: always
 
-  backend:
-    container_name: snowee-api
+  api:
+    container_name: backend
     build: .
     working_dir: /java-app
     environment:
