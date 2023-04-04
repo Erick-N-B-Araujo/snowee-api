@@ -3,6 +3,14 @@
 app:
   message: This is the property file to the ${spring.application.name} specific for PROD environment
 
+server:
+   port: 8080
+   ssl:
+      keyStoreType: PKCS12
+      keyAlias: snoweeapi
+      key-store: src/main/resources/snoweeapi.p12
+      key-store-password: AdcOP1997!
+      
 spring:
   hikari:
     connection-test-query: SELECT 1
@@ -12,7 +20,7 @@ spring:
     auto-commit: FALSE
     connection-timeout: 30000
   datasource:
-    url: jdbc:postgresql://191.96.251.3:5432/dbsnowee
+    url: jdbc:postgresql://database/dbsnowee
     driverClassName: org.postgresql.Driver
     platform: postgres
     username: postgres
@@ -37,3 +45,4 @@ security:
 jwt:
   secret: ${JWT_SECRET:MY-JWT-SECRET}
   duration: ${JWT_DURATION:86400}
+

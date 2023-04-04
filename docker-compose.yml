@@ -28,7 +28,7 @@ services:
       - ./java-app:/java-app
       - ~/.m2:/root/.m2
     ports:
-      - "9000:8080"
+      - "8080:8080"
     command: mvn clean spring-boot:run
     links:
       - database
