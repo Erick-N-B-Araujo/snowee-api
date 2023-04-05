@@ -1,15 +1,14 @@
 pipeline{
-    agent {
-        label 'remoteJenkins'
-    }
+    agent any
+
 	environment {
 		PASS = credentials('dockerhub-pass')
 	}
+
     stages {
         stage('Build') {
             steps {
             sh '''
-                ./scripts/deploy/stop_app.sh
                 ./scripts/build/mvn.sh mvn clean package -DskipTests
             '''
             }
@@ -29,10 +28,10 @@ pipeline{
                     sh './scripts/push/push_docker_image.sh'
                 }	
         }
-        stage('Deploy') {
-                steps {
-                    sh './scripts/deploy/deploy_app.sh'
-                }
+        stage('Start-Deploy') {
+            steps {
+                build job: "Deploy-Backend", wait: true
+            }
         }
     }
 }

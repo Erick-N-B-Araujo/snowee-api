@@ -1,0 +1,18 @@
+pipeline{
+    agent {
+        label 'remoteJenkins'
+    }
+    environment {
+		PASS = credentials('dockerhub-pass')
+	}
+    stages {
+        stage('Deploy') {
+            steps {
+                sh ''' 
+                    ./scripts/deploy/stop_app.sh
+                    ./scripts/deploy/deploy_app.sh
+                '''
+            }
+        }
+    }
+}

@@ -2,20 +2,6 @@ version: '3'
 
 services:
 
-  database:
-    container_name: postgresql
-    image: postgres
-    environment:
-      POSTGRES_PASSWORD: "snowee"
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./postgres-data:/var/lib/postgresql/data 
-    networks:
-      - snoweenet
-    restart: always
-
   api:
     container_name: backend
     image: snoweegamecorp
@@ -30,10 +16,6 @@ services:
     ports:
       - "8080:8080"
     command: mvn clean spring-boot:run
-    links:
-      - database
-    depends_on:
-      - database
     networks:
       - snoweenet
     restart: always
