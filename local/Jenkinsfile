@@ -23,11 +23,6 @@ pipeline{
                     sh './local/scripts/clean/clean_dump.sh'
                 }
         }
-        stage('Push') {
-            steps {
-                    sh './local/scripts/push/push_docker_image.sh'
-                }	
-        }
         stage('Start-Deploy') {
             steps {
                 build job: "Deploy-Backend", wait: true

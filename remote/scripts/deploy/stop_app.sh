@@ -1,9 +1,9 @@
 #!/bin/bash
 
-WORKSPACE=/var/lib/jenkins/workspace/Deploy-Backend
+WORKSPACE=/var/lib/jenkins/workspace/Deploy-Backend/local
 
 echo "Stopping app..."
 
-cd $WORKSPACE/remote/
+cd $WORKSPACE
 
 docker-compose down
