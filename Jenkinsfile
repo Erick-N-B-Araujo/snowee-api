@@ -1,6 +1,6 @@
 pipeline{
     agent {
-        label 'agent-jenkins'
+        label 'remoteJenkins'
     }
 	environment {
 		PASS = credentials('dockerhub-pass')
