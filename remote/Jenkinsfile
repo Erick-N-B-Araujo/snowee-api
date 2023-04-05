@@ -9,8 +9,8 @@ pipeline{
         stage('Deploy') {
             steps {
                 sh ''' 
-                    ./scripts/deploy/stop_app.sh
-                    ./scripts/deploy/deploy_app.sh
+                    ./remote/scripts/deploy/stop_app.sh
+                    ./remote/scripts/deploy/deploy_app.sh
                 '''
             }
         }
