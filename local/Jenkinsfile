@@ -14,18 +14,18 @@ pipeline{
             }
             post {
                 success {
-                    archiveArtifacts artifacts: 'java-app/target/*.jar', fingerprint: true
+                    archiveArtifacts artifacts: 'local/java-app/target/*.jar', fingerprint: true
                 }
             }
         }
         stage('Clean-UP') {
                 steps {
-                    sh './scripts/clean/clean_dump.sh'
+                    sh './local/scripts/clean/clean_dump.sh'
                 }
         }
         stage('Push') {
             steps {
-                    sh './scripts/push/push_docker_image.sh'
+                    sh './local/scripts/push/push_docker_image.sh'
                 }	
         }
         stage('Start-Deploy') {
