@@ -6,7 +6,7 @@ docker login -u ericknbaraujo -p $PASS
 
 echo "Versioning image..."
 
-cd ./remote
+cd ./local
 
 echo $PWD
 
