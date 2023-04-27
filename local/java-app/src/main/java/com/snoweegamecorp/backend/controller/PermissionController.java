@@ -1,5 +1,7 @@
 package com.snoweegamecorp.backend.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.snoweegamecorp.backend.dto.PermissionDTO;
 import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.PermissionRepository;
@@ -11,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,25 +25,44 @@ public class PermissionController {
     private PermissionRepository repository;
 
     @PostMapping
-    public PermissionModel savePermission(@Valid @RequestBody PermissionModel permission)
+    public ResponseEntity savePermission(@Valid @RequestBody PermissionModel permission)
     {
-        return repository
-                .save(permission);
+        repository.save(permission);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @GetMapping()
-    public List<PermissionModel> getAllPermission(){
-        return repository
-                .findAll();
+    @JsonIgnoreProperties({"users"})
+    public ResponseEntity<List<PermissionDTO>> getAllPermission(){
+        return ResponseEntity
+                .ok()
+                .body(
+                        new PermissionDTO()
+                                .getAllPermission(
+                                        repository
+                                                .findAll()));
+    }
+    @GetMapping("/users")
+    public ResponseEntity<List<PermissionDTO>> getAllPermissionUsers(){
+        return ResponseEntity
+                .ok()
+                .body(
+                        new PermissionDTO()
+                                .getAllPermissionUsers(
+                                        repository
+                                                .findAll()));
     }
 
     @GetMapping("{id}")
-    public PermissionModel getPermissionById(@PathVariable Long id) {
-        return repository
-                .findById(id)
-                .orElseThrow(()-> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND
-                ));
+    public ResponseEntity getPermissionById(@PathVariable Long id) {
+        if (repository.existsById(id)){
+            return ResponseEntity
+                    .ok()
+                    .body(repository
+                            .findById(id));
+        } else {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PutMapping
