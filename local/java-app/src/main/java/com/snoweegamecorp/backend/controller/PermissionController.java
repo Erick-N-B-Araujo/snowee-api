@@ -39,7 +39,8 @@ public class PermissionController {
                         new PermissionDTO()
                                 .getAllPermission(
                                         repository
-                                                .findAll()));
+                                                .findAll())
+                );
     }
     @GetMapping("/users")
     public ResponseEntity<List<PermissionDTO>> getAllPermissionUsers(){

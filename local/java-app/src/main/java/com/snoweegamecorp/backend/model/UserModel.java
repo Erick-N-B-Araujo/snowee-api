@@ -43,6 +43,8 @@ public class UserModel implements UserDetails, Serializable {
 	@NotBlank(message = "Campo requerido")
 	private String password;
 	@Column
+	private String profileImgUrl;
+	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime createdAt;
 	@Column
@@ -60,13 +62,10 @@ public class UserModel implements UserDetails, Serializable {
 	@JsonIgnoreProperties("users")
 	private Set<PermissionModel> permissions = new HashSet<>();
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	@JsonIgnoreProperties("user")
+	@JsonIgnoreProperties({"user"})
 	private List<ArticleModel> articles;
 	@PrePersist
 	public void beforeSave() {
-		if (this.createdAt == null){
-			setCreatedAt(LocalDateTime.now());
-		}
 		if (!getEmail().equals("batistasd678@gmail.com")){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
 			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
@@ -89,7 +88,7 @@ public class UserModel implements UserDetails, Serializable {
 		this.updatedAt = updatedAt;
 		this.permissions = permissions;
 	}
-	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions, List<ArticleModel> articles) {
+	public UserModel(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions, List<ArticleModel> articles) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -101,14 +100,15 @@ public class UserModel implements UserDetails, Serializable {
 		this.token = token;
 		this.permissions = permissions;
 		this.articles = articles;
+		this.profileImgUrl = profileImgUrl;
 	}
-
 	public UserModel(UserModel userModel) {
 		this.id = userModel.getId();
 		this.firstName = userModel.getFirstName();
 		this.lastName = userModel.getLastName();
 		this.email = userModel.getEmail();
 		this.password = userModel.getPassword();
+		this.profileImgUrl = userModel.getProfileImgUrl();
 		this.createdAt = userModel.getCreatedAt();
 		this.updatedAt = userModel.getUpdatedAt();
 		this.loggedAt = userModel.getLoggedAt();
@@ -206,6 +206,8 @@ public class UserModel implements UserDetails, Serializable {
 	public void setArticles(List<ArticleModel> articles) {
 		this.articles = articles;
 	}
+	public String getProfileImgUrl() { return profileImgUrl; }
+	public void setProfileImgUrl(String profileImgUrl) { this.profileImgUrl = profileImgUrl; }
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
