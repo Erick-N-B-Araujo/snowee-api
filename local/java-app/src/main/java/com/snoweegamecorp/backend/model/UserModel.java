@@ -48,12 +48,19 @@ public class UserModel implements UserDetails, Serializable {
 	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
 	@NotBlank(message = "Campo requerido")
 	private String password;
+
+	@Column
+	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
+	private String token;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime createdAt;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
+	@Column
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private LocalDateTime loggedAt;
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_permissions",
 				joinColumns = @JoinColumn(name = "user_id"),
@@ -66,7 +73,6 @@ public class UserModel implements UserDetails, Serializable {
 		if (this.createdAt == null){
 			setCreatedAt(LocalDateTime.now());
 		}
-		setUpdatedAt(LocalDateTime.now());
 
 		if (!getEmail().equals("batistasd678@gmail.com")){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
@@ -81,7 +87,6 @@ public class UserModel implements UserDetails, Serializable {
 	public UserModel(){
 	}
 	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionModel> permissions) {
-		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -89,6 +94,19 @@ public class UserModel implements UserDetails, Serializable {
 		this.password = password;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.permissions = permissions;
+	}
+
+	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.loggedAt = loggedAt;
+		this.token = token;
 		this.permissions = permissions;
 	}
 	public UserModel(UserModel user){
@@ -174,6 +192,23 @@ public class UserModel implements UserDetails, Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public LocalDateTime getLoggedAt() {
+		return loggedAt;
+	}
+
+	public void setLoggedAt(LocalDateTime loggedAt) {
+		this.loggedAt = loggedAt;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
