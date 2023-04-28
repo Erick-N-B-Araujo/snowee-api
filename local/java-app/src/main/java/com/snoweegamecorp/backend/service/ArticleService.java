@@ -1,7 +1,7 @@
 package com.snoweegamecorp.backend.service;
 
-import com.snoweegamecorp.backend.model.Article;
-import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.model.ArticleModel;
+import com.snoweegamecorp.backend.model.ThemeModel;
 import com.snoweegamecorp.backend.repository.ArticleRepository;
 import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.resources.exceptions.DatabaseException;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -28,14 +27,14 @@ public class ArticleService {
     private ThemeRepository themeRepository;
 
     @Transactional(readOnly = true)
-    public Page<Article> findAllPaged(PageRequest pageRequest){
-        Page<Article> listPaged = articleRepository.findAll(pageRequest);
-        return listPaged.map(x -> new Article(x));
+    public Page<ArticleModel> findAllPaged(PageRequest pageRequest){
+        Page<ArticleModel> listPaged = articleRepository.findAll(pageRequest);
+        return listPaged.map(x -> new ArticleModel(x));
     }
 
     @Transactional(readOnly = true)
-    public Article findById(Long id) {
-        Optional<Article> objArticle = articleRepository.findById(id);
+    public ArticleModel findById(Long id) {
+        Optional<ArticleModel> objArticle = articleRepository.findById(id);
         return  objArticle
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Entity not found")
@@ -43,33 +42,33 @@ public class ArticleService {
     }
 
     @Transactional
-    public Article insert(Article articleReq) {
-        Article article = new Article(articleReq);
-        Set<Theme> themeList = new HashSet<>();
-        for (Theme theme: articleReq.getThemes()){
-            theme = themeRepository.getOne(theme.getId());
-            themeList.add(theme);
+    public ArticleModel insert(ArticleModel articleModelReq) {
+        ArticleModel articleModel = new ArticleModel(articleModelReq);
+        Set<ThemeModel> themeModelList = new HashSet<>();
+        for (ThemeModel themeModel : articleModelReq.getThemes()){
+            themeModel = themeRepository.getOne(themeModel.getId());
+            themeModelList.add(themeModel);
         }
-        article.setThemes(themeList);
-        return articleRepository.save(articleReq);
+        articleModel.setThemes(themeModelList);
+        return articleRepository.save(articleModelReq);
     }
 
     @Transactional
-    public Article update(Long id, Article articleReq) {
+    public ArticleModel update(Long id, ArticleModel articleModelReq) {
         try {
-            Article article = articleRepository.getOne(id);
-            article.setTitle(articleReq.getTitle());
-            article.setDescriptionText(article.getDescriptionText());
-            article.setArticleText(articleReq.getArticleText());
-            article.setImgUrl(articleReq.getImgUrl());
-            article.setUser(articleReq.getUser());
-            Set<Theme> themeList = new HashSet<>();
-            for (Theme theme: articleReq.getThemes()){
-                theme = themeRepository.getOne(theme.getId());
-                themeList.add(theme);
+            ArticleModel articleModel = articleRepository.getOne(id);
+            articleModel.setTitle(articleModelReq.getTitle());
+            articleModel.setDescriptionText(articleModel.getDescriptionText());
+            articleModel.setArticleText(articleModelReq.getArticleText());
+            articleModel.setImgUrl(articleModelReq.getImgUrl());
+            articleModel.setUser(articleModelReq.getUser());
+            Set<ThemeModel> themeModelList = new HashSet<>();
+            for (ThemeModel themeModel : articleModelReq.getThemes()){
+                themeModel = themeRepository.getOne(themeModel.getId());
+                themeModelList.add(themeModel);
             }
-            article.setThemes(themeList);
-            return articleRepository.save(article);
+            articleModel.setThemes(themeModelList);
+            return articleRepository.save(articleModel);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found: " + id);
         } catch (DataIntegrityViolationException d){

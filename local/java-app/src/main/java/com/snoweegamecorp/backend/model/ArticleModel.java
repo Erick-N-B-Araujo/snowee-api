@@ -8,14 +8,13 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_articles")
-public class Article implements Serializable {
+public class ArticleModel implements Serializable {
 
     private static final long serialVerionUID = 1L;
 
@@ -42,14 +41,14 @@ public class Article implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("articles")
-    private LoginModel user;
+    private UserModel user;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_article_themes",
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "theme_id"))
     @JsonIgnoreProperties("articles")
-    Set<Theme> themes;
+    Set<ThemeModel> themeModels;
 
     @PrePersist
     public void beforeSave() {
@@ -59,9 +58,9 @@ public class Article implements Serializable {
         setUpdatedAt(Instant.now());
     }
 
-    public Article(){}
+    public ArticleModel(){}
 
-    public Article(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt) {
+    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.title = title;
         this.descriptionText = descriptionText;
@@ -71,7 +70,7 @@ public class Article implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public Article(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt,LoginModel user, Set<Theme> themes) {
+    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt, UserModel user, Set<ThemeModel> themeModels) {
         this.id = id;
         this.title = title;
         this.descriptionText = descriptionText;
@@ -80,19 +79,19 @@ public class Article implements Serializable {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.user = user;
-        this.themes = themes;
+        this.themeModels = themeModels;
     }
 
-    public Article(Article article) {
-        this.id = article.getId();
-        this.title = article.getTitle();
-        this.descriptionText = article.getDescriptionText();
-        this.articleText = article.getArticleText();
-        this.imgUrl = article.getImgUrl();
-        this.createdAt = article.getCreatedAt();
-        this.updatedAt = article.getUpdatedAt();
-        this.user = article.getUser();
-        this.themes = article.getThemes();
+    public ArticleModel(ArticleModel articleModel) {
+        this.id = articleModel.getId();
+        this.title = articleModel.getTitle();
+        this.descriptionText = articleModel.getDescriptionText();
+        this.articleText = articleModel.getArticleText();
+        this.imgUrl = articleModel.getImgUrl();
+        this.createdAt = articleModel.getCreatedAt();
+        this.updatedAt = articleModel.getUpdatedAt();
+        this.user = articleModel.getUser();
+        this.themeModels = articleModel.getThemes();
     }
 
     public Long getId() {
@@ -135,19 +134,19 @@ public class Article implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Set<Theme> getThemes() {
-        return themes;
+    public Set<ThemeModel> getThemes() {
+        return themeModels;
     }
 
-    public void setThemes(Set<Theme> themes) {
-        this.themes = themes;
+    public void setThemes(Set<ThemeModel> themeModels) {
+        this.themeModels = themeModels;
     }
 
-    public LoginModel getUser() {
+    public UserModel getUser() {
         return user;
     }
 
-    public void setUser(LoginModel user) {
+    public void setUser(UserModel user) {
         this.user = user;
     }
 

@@ -1,6 +1,6 @@
 package com.snoweegamecorp.backend.service;
 
-import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.model.ThemeModel;
 import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.resources.exceptions.DatabaseException;
 import com.snoweegamecorp.backend.resources.exceptions.ResourceNotFoundException;
@@ -22,14 +22,14 @@ public class ThemeService {
     private ThemeRepository themeRepository;
 
     @Transactional(readOnly = true)
-    public Page<Theme> findAllPaged(PageRequest pageRequest){
-        Page<Theme> listPaged = themeRepository.findAll(pageRequest);
-        return listPaged.map(x -> new Theme(x));
+    public Page<ThemeModel> findAllPaged(PageRequest pageRequest){
+        Page<ThemeModel> listPaged = themeRepository.findAll(pageRequest);
+        return listPaged.map(x -> new ThemeModel(x));
     }
 
     @Transactional(readOnly = true)
-    public Theme findById(Long id) {
-        Optional<Theme> objTheme = themeRepository.findById(id);
+    public ThemeModel findById(Long id) {
+        Optional<ThemeModel> objTheme = themeRepository.findById(id);
         return objTheme
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Entity not found")
@@ -37,16 +37,16 @@ public class ThemeService {
     }
 
     @Transactional
-    public Theme insert(Theme theme) {
-        return themeRepository.save(theme);
+    public ThemeModel insert(ThemeModel themeModel) {
+        return themeRepository.save(themeModel);
     }
 
     @Transactional
-    public Theme update(Long id, Theme theme) {
+    public ThemeModel update(Long id, ThemeModel themeModel) {
         try {
-            Theme themeFound = themeRepository.getOne(id);
-            themeFound.setName(theme.getName());
-            return themeRepository.save(themeFound);
+            ThemeModel themeModelFound = themeRepository.getOne(id);
+            themeModelFound.setName(themeModel.getName());
+            return themeRepository.save(themeModelFound);
         } catch (EntityNotFoundException e){
             throw new ResourceNotFoundException("Id not found: " + id);
         } catch (DataIntegrityViolationException d){

@@ -1,6 +1,6 @@
 package com.snoweegamecorp.backend.controller;
 
-import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.model.ThemeModel;
 import com.snoweegamecorp.backend.repository.ThemeRepository;
 import com.snoweegamecorp.backend.service.ThemeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/themes")
@@ -27,7 +26,7 @@ public class ThemeController {
     private ThemeRepository themeRepository;
 
     @GetMapping
-    public ResponseEntity<Page<Theme>> findAll(
+    public ResponseEntity<Page<ThemeModel>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -35,43 +34,43 @@ public class ThemeController {
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        Page<Theme> themes = themeService.findAllPaged(pageRequest);
+        Page<ThemeModel> themes = themeService.findAllPaged(pageRequest);
 
         return ResponseEntity.ok().body(themes);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Theme> findById(@PathVariable Long id){
-        Theme theme = themeService.findById(id);
-        return ResponseEntity.ok().body(theme);
+    public ResponseEntity<ThemeModel> findById(@PathVariable Long id){
+        ThemeModel themeModel = themeService.findById(id);
+        return ResponseEntity.ok().body(themeModel);
     }
 
     @GetMapping(value = "/list-all")
-    public ResponseEntity<List<Theme>> findListAll(){
-        List<Theme> themes= themeRepository.findAll();
-        return ResponseEntity.ok().body(themes);
+    public ResponseEntity<List<ThemeModel>> findListAll(){
+        List<ThemeModel> themeModels = themeRepository.findAll();
+        return ResponseEntity.ok().body(themeModels);
     }
 
     @PostMapping()
-    public ResponseEntity<Theme> insert(@RequestBody Theme theme){
-        theme = themeService.insert(theme);
+    public ResponseEntity<ThemeModel> insert(@RequestBody ThemeModel themeModel){
+        themeModel = themeService.insert(themeModel);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(theme.getId())
+                .buildAndExpand(themeModel.getId())
                 .toUri();
 
         return ResponseEntity
                 .created(uri)
-                .body(theme);
+                .body(themeModel);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Theme> update(@PathVariable Long id, @RequestBody Theme theme){
-        theme = themeService.update(id, theme);
+    public ResponseEntity<ThemeModel> update(@PathVariable Long id, @RequestBody ThemeModel themeModel){
+        themeModel = themeService.update(id, themeModel);
         return ResponseEntity
                 .ok()
-                .body(theme);
+                .body(themeModel);
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,7 +1,6 @@
 package com.snoweegamecorp.backend.controller;
 
-import com.snoweegamecorp.backend.model.Article;
-import com.snoweegamecorp.backend.model.Theme;
+import com.snoweegamecorp.backend.model.ArticleModel;
 import com.snoweegamecorp.backend.repository.ArticleRepository;
 import com.snoweegamecorp.backend.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +26,13 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @GetMapping
-    public ResponseEntity<List<Article>> findListAll(){
-        List<Article> articles= articleRepository.findAll();
-        return ResponseEntity.ok().body(articles);
+    public ResponseEntity<List<ArticleModel>> findListAll(){
+        List<ArticleModel> articleModels = articleRepository.findAll();
+        return ResponseEntity.ok().body(articleModels);
     }
 
     @GetMapping(value = "/list-all")
-    public ResponseEntity<Page<Article>> findAll(
+    public ResponseEntity<Page<ArticleModel>> findAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
             @RequestParam(value = "direction", defaultValue = "ASC") String direction,
@@ -41,37 +40,37 @@ public class ArticleController {
     ){
         PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 
-        Page<Article> articles = articleService.findAllPaged(pageRequest);
+        Page<ArticleModel> articles = articleService.findAllPaged(pageRequest);
 
         return ResponseEntity.ok().body(articles);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Article> findById(@PathVariable Long id){
-        Article article = articleService.findById(id);
-        return ResponseEntity.ok().body(article);
+    public ResponseEntity<ArticleModel> findById(@PathVariable Long id){
+        ArticleModel articleModel = articleService.findById(id);
+        return ResponseEntity.ok().body(articleModel);
     }
 
     @PostMapping()
-    public ResponseEntity<Article> insert(@RequestBody Article article){
-        article = articleService.insert(article);
+    public ResponseEntity<ArticleModel> insert(@RequestBody ArticleModel articleModel){
+        articleModel = articleService.insert(articleModel);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(article.getId())
+                .buildAndExpand(articleModel.getId())
                 .toUri();
 
         return ResponseEntity
                 .created(uri)
-                .body(article);
+                .body(articleModel);
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<Article> update(@PathVariable Long id, @RequestBody Article article){
-        article = articleService.update(id, article);
+    public ResponseEntity<ArticleModel> update(@PathVariable Long id, @RequestBody ArticleModel articleModel){
+        articleModel = articleService.update(id, articleModel);
         return ResponseEntity
                 .ok()
-                .body(article);
+                .body(articleModel);
     }
 
     @DeleteMapping(value = "/{id}")

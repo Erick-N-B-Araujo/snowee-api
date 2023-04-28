@@ -58,7 +58,7 @@ public class LoginModel implements UserDetails,Serializable {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
-    private List<Article> articles;
+    private List<ArticleModel> articleModels;
 
     @PrePersist
     public void beforeSave() {
@@ -179,11 +179,11 @@ public class LoginModel implements UserDetails,Serializable {
         this.lastname = lastname;
     }
 
-    public List<Article> getArticles() {
-        return articles;
+    public List<ArticleModel> getArticles() {
+        return articleModels;
     }
 
-    public void setArticles(List<Article> articles) {
-        this.articles = articles;
+    public void setArticles(List<ArticleModel> articleModels) {
+        this.articleModels = articleModels;
     }
 }

@@ -25,33 +25,19 @@ public class PermissionDTO implements Serializable {
     public PermissionDTO(){
     }
     public PermissionDTO(Long id, String permissionName){
-        super();
         this.id = id;
         this.permissionName = permissionName;
     }
     public PermissionDTO(PermissionModel permissionModel){
-        super();
         id = permissionModel.getId();
         permissionName = permissionModel.getPermissionName();
         users = permissionModel.getUsers();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PermissionDTO that = (PermissionDTO) o;
-        return id.equals(that.id) && permissionName.equals(that.permissionName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, permissionName);
-    }
-
     @Transactional
     public List<PermissionDTO> getAllPermission(List<PermissionModel> permissionList){
         List<PermissionDTO> permissionsDTO = new ArrayList<>();
+        List<String> permDTO = new ArrayList<>();
         for(PermissionModel permission : permissionList){
             PermissionDTO perm = new PermissionDTO(permission.getId(), permission.getPermissionName());
             permissionsDTO.add(perm);
@@ -67,5 +53,18 @@ public class PermissionDTO implements Serializable {
             permissionsDTO.add(perm);
         }
         return permissionsDTO;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PermissionDTO that = (PermissionDTO) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

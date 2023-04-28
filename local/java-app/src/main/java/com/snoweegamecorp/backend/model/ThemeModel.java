@@ -8,14 +8,13 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_themes")
-public class Theme implements Serializable {
+public class ThemeModel implements Serializable {
 
     private static final long serialVerionUID = 1L;
 
@@ -33,25 +32,25 @@ public class Theme implements Serializable {
             joinColumns = @JoinColumn(name = "theme_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))
     @JsonIgnoreProperties("themes")
-    Set<Article> articles;
+    Set<ArticleModel> articleModels;
 
-    public Theme(){}
+    public ThemeModel(){}
 
-    public Theme(Long id, String name) {
+    public ThemeModel(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Theme(Long id, String name, Set<Article> articles) {
+    public ThemeModel(Long id, String name, Set<ArticleModel> articleModels) {
         this.id = id;
         this.name = name;
-        this.articles = articles;
+        this.articleModels = articleModels;
     }
 
-    public Theme(Theme x) {
+    public ThemeModel(ThemeModel x) {
         this.id = x.getId();
         this.name = x.getName();
-        this.articles = x.getArticles();
+        this.articleModels = x.getArticles();
     }
 
     public Long getId() {
@@ -70,11 +69,11 @@ public class Theme implements Serializable {
         this.name = name;
     }
 
-    public Set<Article> getArticles() {
-        return articles;
+    public Set<ArticleModel> getArticles() {
+        return articleModels;
     }
 
-    public void setArticles(Set<Article> articles) {
-        this.articles = articles;
+    public void setArticles(Set<ArticleModel> articleModels) {
+        this.articleModels = articleModels;
     }
 }
