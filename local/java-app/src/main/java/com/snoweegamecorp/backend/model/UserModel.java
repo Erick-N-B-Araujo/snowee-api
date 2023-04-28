@@ -4,30 +4,24 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "tb_users")
 public class UserModel implements UserDetails, Serializable {
-
 	private static final long serialVerionUID = 1L;
 	@Id
 	@GeneratedValue(generator = "increment")
@@ -48,16 +42,14 @@ public class UserModel implements UserDetails, Serializable {
 	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
 	@NotBlank(message = "Campo requerido")
 	private String password;
-
-	@Column
-	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
-	private String token;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime createdAt;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
+	@Column
+	private String token;
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime loggedAt;
@@ -67,13 +59,14 @@ public class UserModel implements UserDetails, Serializable {
 				inverseJoinColumns = @JoinColumn(name = "permission_id"))
 	@JsonIgnoreProperties("users")
 	private Set<PermissionModel> permissions = new HashSet<>();
-
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties("user")
+	private List<ArticleModel> articles;
 	@PrePersist
 	public void beforeSave() {
 		if (this.createdAt == null){
 			setCreatedAt(LocalDateTime.now());
 		}
-
 		if (!getEmail().equals("batistasd678@gmail.com")){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
 			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
@@ -96,8 +89,7 @@ public class UserModel implements UserDetails, Serializable {
 		this.updatedAt = updatedAt;
 		this.permissions = permissions;
 	}
-
-	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions) {
+	public UserModel(Long id, String firstName, String lastName, String email, String password, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions, List<ArticleModel> articles) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -108,13 +100,21 @@ public class UserModel implements UserDetails, Serializable {
 		this.loggedAt = loggedAt;
 		this.token = token;
 		this.permissions = permissions;
+		this.articles = articles;
 	}
-	public UserModel(UserModel user){
-		id = user.getId();
-		firstName = user.getFirstName();
-		lastName = user.getLastName();
-		email = user.getEmail();
-		user.getPermissions().forEach(permission -> this.permissions.add(new PermissionModel(permission)));
+
+	public UserModel(UserModel userModel) {
+		this.id = userModel.getId();
+		this.firstName = userModel.getFirstName();
+		this.lastName = userModel.getLastName();
+		this.email = userModel.getEmail();
+		this.password = userModel.getPassword();
+		this.createdAt = userModel.getCreatedAt();
+		this.updatedAt = userModel.getUpdatedAt();
+		this.loggedAt = userModel.getLoggedAt();
+		this.token = userModel.getToken();
+		this.permissions = userModel.getPermissions();
+		this.articles = userModel.getArticles();
 	}
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -189,26 +189,23 @@ public class UserModel implements UserDetails, Serializable {
 	public String getEmail() {
 		return email;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
+	public void setEmail(String email) { this.email = email; }
 	public String getToken() {
 		return token;
 	}
-
 	public void setToken(String token) {
 		this.token = token;
 	}
-
 	public LocalDateTime getLoggedAt() {
 		return loggedAt;
 	}
-
 	public void setLoggedAt(LocalDateTime loggedAt) {
 		this.loggedAt = loggedAt;
 	}
-
+	public List<ArticleModel> getArticles() { return articles; }
+	public void setArticles(List<ArticleModel> articles) {
+		this.articles = articles;
+	}
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

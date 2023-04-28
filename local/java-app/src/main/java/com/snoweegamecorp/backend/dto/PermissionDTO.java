@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import lombok.Getter;
-import lombok.Setter;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,14 +13,11 @@ import java.util.Set;
 
 @Getter
 public class PermissionDTO implements Serializable {
-
     private static final long serialVerionUID = 1L;
     private Long id;
     private String permissionName;
-
     @JsonIgnoreProperties({"permissions","firstName","lastName","password","createdAt","updatedAt", "username", "accountNonExpired", "credentialsNonExpired", "accountNonLocked", "authorities"})
     private Set<UserModel> users;
-
     public PermissionDTO(){
     }
     public PermissionDTO(Long id, String permissionName){
@@ -33,7 +29,6 @@ public class PermissionDTO implements Serializable {
         permissionName = permissionModel.getPermissionName();
         users = permissionModel.getUsers();
     }
-
     @Transactional
     public List<PermissionDTO> getAllPermission(List<PermissionModel> permissionList){
         List<PermissionDTO> permissionsDTO = new ArrayList<>();
@@ -44,7 +39,6 @@ public class PermissionDTO implements Serializable {
         }
         return permissionsDTO;
     }
-
     @Transactional
     public List<PermissionDTO> getAllPermissionUsers(List<PermissionModel> permissionList){
         List<PermissionDTO> permissionsDTO = new ArrayList<>();
@@ -54,7 +48,6 @@ public class PermissionDTO implements Serializable {
         }
         return permissionsDTO;
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,7 +55,6 @@ public class PermissionDTO implements Serializable {
         PermissionDTO that = (PermissionDTO) o;
         return id.equals(that.id);
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(id);

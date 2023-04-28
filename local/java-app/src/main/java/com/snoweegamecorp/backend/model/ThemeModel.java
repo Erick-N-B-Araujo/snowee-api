@@ -31,8 +31,8 @@ public class ThemeModel implements Serializable {
     @JoinTable(name = "tb_article_themes",
             joinColumns = @JoinColumn(name = "theme_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))
-    @JsonIgnoreProperties("themes")
-    Set<ArticleModel> articleModels;
+    @JsonIgnoreProperties({"themes", "user"})
+    Set<ArticleModel> articles;
 
     public ThemeModel(){}
 
@@ -41,16 +41,16 @@ public class ThemeModel implements Serializable {
         this.name = name;
     }
 
-    public ThemeModel(Long id, String name, Set<ArticleModel> articleModels) {
+    public ThemeModel(Long id, String name, Set<ArticleModel> articles) {
         this.id = id;
         this.name = name;
-        this.articleModels = articleModels;
+        this.articles = articles;
     }
 
     public ThemeModel(ThemeModel x) {
         this.id = x.getId();
         this.name = x.getName();
-        this.articleModels = x.getArticles();
+        this.articles = x.getArticles();
     }
 
     public Long getId() {
@@ -70,10 +70,10 @@ public class ThemeModel implements Serializable {
     }
 
     public Set<ArticleModel> getArticles() {
-        return articleModels;
+        return articles;
     }
 
     public void setArticles(Set<ArticleModel> articleModels) {
-        this.articleModels = articleModels;
+        this.articles = articleModels;
     }
 }

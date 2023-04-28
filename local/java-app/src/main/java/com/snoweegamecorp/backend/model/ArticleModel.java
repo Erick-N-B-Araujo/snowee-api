@@ -48,7 +48,7 @@ public class ArticleModel implements Serializable {
             joinColumns = @JoinColumn(name = "article_id"),
             inverseJoinColumns = @JoinColumn(name = "theme_id"))
     @JsonIgnoreProperties("articles")
-    Set<ThemeModel> themeModels;
+    Set<ThemeModel> themes;
 
     @PrePersist
     public void beforeSave() {
@@ -70,7 +70,7 @@ public class ArticleModel implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt, UserModel user, Set<ThemeModel> themeModels) {
+    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt, UserModel user, Set<ThemeModel> themes) {
         this.id = id;
         this.title = title;
         this.descriptionText = descriptionText;
@@ -79,7 +79,7 @@ public class ArticleModel implements Serializable {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.user = user;
-        this.themeModels = themeModels;
+        this.themes = themes;
     }
 
     public ArticleModel(ArticleModel articleModel) {
@@ -91,7 +91,7 @@ public class ArticleModel implements Serializable {
         this.createdAt = articleModel.getCreatedAt();
         this.updatedAt = articleModel.getUpdatedAt();
         this.user = articleModel.getUser();
-        this.themeModels = articleModel.getThemes();
+        this.themes = articleModel.getThemes();
     }
 
     public Long getId() {
@@ -135,11 +135,11 @@ public class ArticleModel implements Serializable {
     }
 
     public Set<ThemeModel> getThemes() {
-        return themeModels;
+        return themes;
     }
 
     public void setThemes(Set<ThemeModel> themeModels) {
-        this.themeModels = themeModels;
+        this.themes = themeModels;
     }
 
     public UserModel getUser() {
