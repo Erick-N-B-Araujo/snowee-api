@@ -32,7 +32,6 @@ public class PermissionController {
     }
 
     @GetMapping()
-    @JsonIgnoreProperties({"users"})
     public ResponseEntity<List<PermissionDTO>> getAllPermission(){
         return ResponseEntity
                 .ok()
@@ -67,6 +66,7 @@ public class PermissionController {
 
     @PutMapping
     public ResponseEntity<PermissionModel> putPermission(@Valid @RequestBody PermissionModel permission){
+
         return ResponseEntity.ok(repository.save(permission));
     }
 

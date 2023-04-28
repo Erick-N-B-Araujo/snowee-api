@@ -13,7 +13,6 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
-@Setter
 public class PermissionDTO implements Serializable {
 
     private static final long serialVerionUID = 1L;

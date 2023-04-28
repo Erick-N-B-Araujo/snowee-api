@@ -39,12 +39,16 @@ public class BackendApplication {
 			@Override
 			public void run(String... args) throws Exception {
 				String encodedPass = passwordEncoder.encode("1234");
-				PermissionModel permissionAdmin = new PermissionModel();
-				permissionAdmin.setPermissionName("ROLE_ADMIN");
-				permissionRepo.save(permissionAdmin);
-				PermissionModel permissionGuest = new PermissionModel();
-				permissionGuest.setPermissionName("ROLE_OPERATOR");
-				permissionRepo.save(permissionGuest);
+				PermissionModel permissionAdmin = new PermissionModel(1L, "ROLE_ADMIN");
+				PermissionModel permissionGuest = new PermissionModel(2L, "ROLE_OPERATOR");
+
+				if (permissionRepo.existsById(permissionAdmin.getId()) && permissionRepo.existsById(permissionGuest.getId())){
+						System.out.println("Permissions already recorded!");
+				} else {
+					permissionRepo.save(permissionAdmin);
+					permissionRepo.save(permissionGuest);
+				}
+
 				Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionAdmin, permissionGuest));
 				UserModel user = new UserModel(
 						id,
