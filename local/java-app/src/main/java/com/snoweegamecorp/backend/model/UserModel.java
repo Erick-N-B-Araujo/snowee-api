@@ -85,6 +85,17 @@ public class UserModel implements UserDetails, Serializable {
 		this.updatedAt = updatedAt;
 		this.permissions = permissions;
 	}
+	public UserModel(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionModel> permissions) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
+		this.profileImgUrl = profileImgUrl;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.permissions = permissions;
+	}
 	public UserModel(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionModel> permissions, List<ArticleModel> articles) {
 		this.id = id;
 		this.firstName = firstName;

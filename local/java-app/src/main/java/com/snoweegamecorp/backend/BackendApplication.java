@@ -33,6 +33,8 @@ public class BackendApplication {
 	private BCryptPasswordEncoder passwordEncoder;
 	public Long id = Long.valueOf(1);
 
+	public String profilePic = "https://i.imgur.com/CWf3Y4j.jpg";
+
 	@Bean
 	public CommandLineRunner init() {
 		return new CommandLineRunner() {
@@ -56,6 +58,7 @@ public class BackendApplication {
 						"Araujo",
 						"batistasd678@gmail.com",
 						encodedPass,
+						profilePic,
 						LocalDateTime.now(),
 						null,
 						permissions
