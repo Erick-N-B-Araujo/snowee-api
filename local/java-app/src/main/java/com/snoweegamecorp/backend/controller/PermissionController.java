@@ -71,8 +71,11 @@ public class PermissionController {
     }
 
     @DeleteMapping("{id}")
-    public void deletePermissionById(@PathVariable Long id){
+    public ResponseEntity deletePermissionById(@PathVariable Long id){
         repository
                 .deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

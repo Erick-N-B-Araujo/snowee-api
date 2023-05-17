@@ -96,9 +96,13 @@ public class UserController {
 		);
 	}
 	@DeleteMapping("{id}")
-	public void deleteUserById(@PathVariable Long id){
+	public ResponseEntity deleteUserById(@PathVariable Long id){
 		repository
 				.deleteById(id);
+
+		return ResponseEntity
+				.noContent()
+				.build();
 	}
 	@PatchMapping("{id}/admin")
 	public UserModel definePermission(@PathVariable Long id){
