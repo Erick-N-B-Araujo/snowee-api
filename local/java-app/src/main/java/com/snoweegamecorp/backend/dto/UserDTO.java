@@ -1,18 +1,10 @@
 package com.snoweegamecorp.backend.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.snoweegamecorp.backend.model.ArticleModel;
-import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import lombok.Getter;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import javax.transaction.Transactional;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -90,13 +82,25 @@ public class UserDTO implements Serializable {
         return usersDTO;
     }
     @Transactional
-    public List<UserDTO> getAllUsersPermissions(List<UserModel> userList){
+    public List<UserDTO> getAllUsersData(List<UserModel> userList){
         List<UserDTO> usersDTO = new ArrayList<>();
         for(UserModel user : userList){
             UserDTO userDTO = new UserDTO(user);
             usersDTO.add(userDTO);
         }
         return usersDTO;
+    }
+
+    @Transactional
+    public UserDTO makeDTO(UserModel user){
+        UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getProfileImgUrl(), user.getCreatedAt(), user.getUpdatedAt(), user.getLoggedAt());
+        return userDTO;
+    }
+
+    @Transactional
+    public UserDTO makeDTOAll(UserModel user){
+        UserDTO userDTO = new UserDTO(user);
+        return userDTO;
     }
     @Override
     public boolean equals(Object o) {

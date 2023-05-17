@@ -30,7 +30,9 @@ public class UserController {
 		String encodedPass = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPass);
 		user.setCreatedAt(LocalDateTime.now());
-		return new ResponseEntity(repository.save(user), HttpStatus.CREATED);
+		return new ResponseEntity(
+				new UserDTO().makeDTO(repository.save(user)), HttpStatus.CREATED
+		);
 	}
 	@GetMapping()
 	public ResponseEntity<List<UserDTO>> getAllUsers(){
@@ -41,13 +43,13 @@ public class UserController {
 								.getAllUsers(repository.findAll())
 				);
 	}
-	@GetMapping("/permissions")
+	@GetMapping("/all")
 	public ResponseEntity<List<UserDTO>> getAllUsersPermissions(){
 		return ResponseEntity
 				.ok()
 				.body(
 						new UserDTO()
-								.getAllUsersPermissions(repository.findAll())
+								.getAllUsersData(repository.findAll())
 				);
 	}
 	@GetMapping("{id}")
@@ -55,17 +57,43 @@ public class UserController {
 		return ResponseEntity
 				.ok()
 				.body(
-						new UserDTO(
-								repository
-										.findById(id)
-										.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND))
-						)
+						new UserDTO()
+								.makeDTO(
+										repository
+												.findById(id)
+												.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND))
+								)
+				);
+	}
+	@GetMapping("{id}/all")
+	public ResponseEntity getByIdData(@PathVariable Long id) {
+		return ResponseEntity
+				.ok()
+				.body(
+						new UserDTO()
+								.makeDTOAll(
+										repository
+												.findById(id)
+												.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND))
+								)
 				);
 	}
 	@PutMapping("{id}")
-	public ResponseEntity updateUserBy(@PathVariable Long id, @Valid @RequestBody UserModel user){
+	public ResponseEntity updateUserBy(@PathVariable Long id, @Valid @RequestBody UserModel userModel){
+		UserModel user = new UserModel(
+				repository.findById(id)
+						.orElseThrow(()->
+								new ResponseStatusException(HttpStatus.NOT_FOUND)
+						)
+		);
+		user.setFirstName(userModel.getFirstName());
+		user.setLastName(userModel.getLastName());
+		user.setProfileImgUrl(userModel.getProfileImgUrl());
 		user.setUpdatedAt(LocalDateTime.now());
-		return new ResponseEntity(repository.save(user), HttpStatus.ACCEPTED);
+		repository.save(user);
+		return new ResponseEntity(
+				new UserDTO().makeDTO(user), HttpStatus.ACCEPTED
+		);
 	}
 	@DeleteMapping("{id}")
 	public void deleteUserById(@PathVariable Long id){
