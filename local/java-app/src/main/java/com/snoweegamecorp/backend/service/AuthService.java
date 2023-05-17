@@ -1,5 +1,7 @@
 package com.snoweegamecorp.backend.service;
 
+import com.snoweegamecorp.backend.dto.LoginDTO;
+import com.snoweegamecorp.backend.dto.UserDTO;
 import com.snoweegamecorp.backend.model.LoginModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import com.snoweegamecorp.backend.repository.LoginRepository;
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 public class AuthService{
 
@@ -18,27 +22,22 @@ public class AuthService{
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private LoginRepository loginRepository;
-
-    @Autowired
-    private PermissionRepository permissionRepository;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private  LoginRepository loginRepository;
 
-    public LoginModel Login(LoginModel userLogin){
-        UserModel user = userRepository.findByEmail(userLogin.getUsername());
+    public LoginModel Login(LoginModel loginModel){
+        UserModel user = userRepository.findByEmail(loginModel.getUsername());
         if (user != null){
-            if (passwordEncoder.matches(userLogin.getPassword(),user.getPassword())){
-                userLogin.setId(user.getId());
-                String encodedPass = passwordEncoder.encode(userLogin.getPassword());
-                userLogin.setId(user.getId());
-                userLogin.setFirstname(user.getFirstName());
-                userLogin.setLastname(user.getLastName());
-                userLogin.setPassword(encodedPass);
-                userLogin.setPermissions(user.getPermissions());
-                return userLogin;
+            if (passwordEncoder.matches(loginModel.getPassword(),user.getPassword())){
+                loginModel.setId(user.getId());
+                loginModel.setFirstname(user.getFirstName());
+                loginModel.setLastname(user.getLastName());
+                loginModel.setUsername(user.getUsername());
+                loginModel.setProfileImg(user.getProfileImgUrl());
+                loginModel.setLoggedAt(LocalDateTime.now());
+                return loginRepository.save(loginModel);
             }
         }
         return null;

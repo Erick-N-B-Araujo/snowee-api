@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 @Entity
 @Getter
 @Setter
-@Table(name = "tb_user_login")
-public class LoginModel implements UserDetails,Serializable {
+@Table(name = "tb_login")
+public class LoginModel implements Serializable {
 
     private static final long serialVerionUID = 1L;
 
@@ -49,86 +49,43 @@ public class LoginModel implements UserDetails,Serializable {
     private String token;
 
     @Column
+    private String profileImg;
+
+    @Column
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime loggedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("users")
-    private Set<PermissionModel> permissions = new HashSet<>();
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("user")
-    private List<ArticleModel> articleModels;
-
-    @PrePersist
-    public void beforeSave() {
-        setLoggedAt(LocalDateTime.now());
-    }
-
-    public LoginModel(long id, String firstname, String lastname, String username, String password, String token, LocalDateTime loggedAt, Set<PermissionModel> permissions) {
+    public LoginModel(long id, String firstname, String lastname, String username,String profileImg, String token, LocalDateTime loggedAt) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
-        this.password = password;
+        this.profileImg = profileImg;
         this.token = token;
         this.loggedAt = loggedAt;
-        this.permissions = permissions;
     }
-
     public LoginModel(){
     }
-
     public LoginModel(LoginModel user){
         id = user.getId();
         firstname = user.getFirstname();
         lastname = user.getLastname();
         username = user.getUsername();
-        password = user.getPassword();
+        profileImg = user.getProfileImg();
         token = user.getToken();
-        user.getPermissions().forEach(permission -> this.permissions.add(new PermissionModel(permission)));
+        loggedAt = user.getLoggedAt();
     }
-
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
     }
-
     public String getUsername() {
         return username;
     }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permissions
-                .stream()
-                .map(
-                        permission -> new SimpleGrantedAuthority(permission.getPermissionName()))
-                .collect(Collectors.toList());
     }
 
     public String getPassword() {
@@ -145,14 +102,6 @@ public class LoginModel implements UserDetails,Serializable {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Set<PermissionModel> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(Set<PermissionModel> permissions) {
-        this.permissions = permissions;
     }
 
     public LocalDateTime getLoggedAt() {
@@ -177,13 +126,5 @@ public class LoginModel implements UserDetails,Serializable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
-    }
-
-    public List<ArticleModel> getArticles() {
-        return articleModels;
-    }
-
-    public void setArticles(List<ArticleModel> articleModels) {
-        this.articleModels = articleModels;
     }
 }

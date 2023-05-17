@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.snoweegamecorp.backend.model.ArticleModel;
 import com.snoweegamecorp.backend.model.UserModel;
 import lombok.Getter;
@@ -18,14 +19,14 @@ public class UserDTO implements Serializable {
     private String email;
     private String password;
     private String profileImgUrl;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime createdAt;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime updatedAt;
-    private String token;
-    private LocalDateTime loggedAt;
     private Set<PermissionDTO> permissions = new HashSet<>();
     private List<ArticleModel> articles;
     public UserDTO(){}
-    public UserDTO(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, String token, LocalDateTime loggedAt, Set<PermissionDTO> permissions, List<ArticleModel> articles) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionDTO> permissions, List<ArticleModel> articles) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -34,8 +35,6 @@ public class UserDTO implements Serializable {
         this.profileImgUrl = profileImgUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.token = token;
-        this.loggedAt = loggedAt;
         this.permissions = permissions;
         this.articles = articles;
     }
@@ -48,21 +47,17 @@ public class UserDTO implements Serializable {
         this.profileImgUrl = userModel.getProfileImgUrl();
         this.createdAt = userModel.getCreatedAt();
         this.updatedAt = userModel.getUpdatedAt();
-        this.token = userModel.getToken();
-        this.loggedAt = userModel.getLoggedAt();
         userModel.getPermissions()
                 .forEach(permission -> {
                             this.permissions.add(new PermissionDTO(permission.getId(), permission.getPermissionName()));
                 });
         this.articles = userModel.getArticles();
     }
-    public UserDTO(Long id, String email, String token) {
+    public UserDTO(Long id, String email) {
         this.id = id;
         this.email = email;
-        this.token = token;
-        this.loggedAt = LocalDateTime.now();
     }
-    public UserDTO(Long id, String firstName, String lastName, String email, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -70,13 +65,12 @@ public class UserDTO implements Serializable {
         this.profileImgUrl = profileImgUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.loggedAt = loggedAt;
     }
     @Transactional
     public List<UserDTO> getAllUsers(List<UserModel> userList){
         List<UserDTO> usersDTO = new ArrayList<>();
         for(UserModel user : userList){
-            UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getProfileImgUrl(), user.getCreatedAt(), user.getUpdatedAt(), user.getLoggedAt());
+            UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getProfileImgUrl(), user.getCreatedAt(), user.getUpdatedAt());
             usersDTO.add(userDTO);
         }
         return usersDTO;
@@ -93,7 +87,7 @@ public class UserDTO implements Serializable {
 
     @Transactional
     public UserDTO makeDTO(UserModel user){
-        UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getProfileImgUrl(), user.getCreatedAt(), user.getUpdatedAt(), user.getLoggedAt());
+        UserDTO userDTO = new UserDTO(user.getId(), user.getFirstName(), user.getLastName(), user.getEmail(), user.getProfileImgUrl(), user.getCreatedAt(), user.getUpdatedAt());
         return userDTO;
     }
 

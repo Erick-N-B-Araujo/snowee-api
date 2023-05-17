@@ -37,6 +37,7 @@ public class UserModel implements UserDetails, Serializable {
 	private String lastName;
 	@Column(unique = true)
 	@Email(message = "Não entrar com email inválido!")
+	@NotBlank(message = "Campo requerido")
 	private String email;
 	@Column
 	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
@@ -50,11 +51,7 @@ public class UserModel implements UserDetails, Serializable {
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
-	@Column
-	private String token;
-	@Column
-	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-	private LocalDateTime loggedAt;
+
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_permissions",
 				joinColumns = @JoinColumn(name = "user_id"),
@@ -88,7 +85,7 @@ public class UserModel implements UserDetails, Serializable {
 		this.updatedAt = updatedAt;
 		this.permissions = permissions;
 	}
-	public UserModel(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, LocalDateTime loggedAt,String token,Set<PermissionModel> permissions, List<ArticleModel> articles) {
+	public UserModel(Long id, String firstName, String lastName, String email, String password, String profileImgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, Set<PermissionModel> permissions, List<ArticleModel> articles) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -96,8 +93,6 @@ public class UserModel implements UserDetails, Serializable {
 		this.password = password;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.loggedAt = loggedAt;
-		this.token = token;
 		this.permissions = permissions;
 		this.articles = articles;
 		this.profileImgUrl = profileImgUrl;
@@ -111,8 +106,6 @@ public class UserModel implements UserDetails, Serializable {
 		this.profileImgUrl = userModel.getProfileImgUrl();
 		this.createdAt = userModel.getCreatedAt();
 		this.updatedAt = userModel.getUpdatedAt();
-		this.loggedAt = userModel.getLoggedAt();
-		this.token = userModel.getToken();
 		this.permissions = userModel.getPermissions();
 		this.articles = userModel.getArticles();
 	}
@@ -190,18 +183,6 @@ public class UserModel implements UserDetails, Serializable {
 		return email;
 	}
 	public void setEmail(String email) { this.email = email; }
-	public String getToken() {
-		return token;
-	}
-	public void setToken(String token) {
-		this.token = token;
-	}
-	public LocalDateTime getLoggedAt() {
-		return loggedAt;
-	}
-	public void setLoggedAt(LocalDateTime loggedAt) {
-		this.loggedAt = loggedAt;
-	}
 	public List<ArticleModel> getArticles() { return articles; }
 	public void setArticles(List<ArticleModel> articles) {
 		this.articles = articles;
