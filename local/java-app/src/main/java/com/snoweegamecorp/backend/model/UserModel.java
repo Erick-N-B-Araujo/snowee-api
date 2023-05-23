@@ -71,7 +71,6 @@ public class UserModel implements UserDetails, Serializable {
 	}
 	@PostPersist
 	public void afterSave(){
-
 	}
 	public UserModel(){
 	}

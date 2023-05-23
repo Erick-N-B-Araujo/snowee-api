@@ -2,9 +2,13 @@ package com.snoweegamecorp.backend.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.snoweegamecorp.backend.model.LoginModel;
+import com.snoweegamecorp.backend.model.UserModel;
 
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class LoginDTO  implements Serializable {
@@ -52,8 +56,15 @@ public class LoginDTO  implements Serializable {
         token = loginModel.getToken();
         loggedAt = loginModel.getLoggedAt();
     }
-
-
+    @Transactional
+    public List<LoginDTO> getAllLoggedUsers(List<LoginModel> loginList){
+        List<LoginDTO> logginsDTO = new ArrayList<>();
+        for(LoginModel login : loginList){
+            LoginDTO logginDTO = new LoginDTO(login);
+            logginsDTO.add(logginDTO);
+        }
+        return logginsDTO;
+    }
     public Long getId() {
         return id;
     }

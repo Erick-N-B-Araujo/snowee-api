@@ -19,10 +19,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -53,12 +50,23 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/login")
+    public ResponseEntity getUsersLogged() {
+        List<LoginModel> loggedUsers = loginRepository.findAll();
+        return new ResponseEntity(
+                new LoginDTO().getAllLoggedUsers(loggedUsers), HttpStatus.OK
+        );
+    }
+
     @PostMapping("/signin")
     public ResponseEntity signin(@Valid @RequestBody UserModel user)
     {
         String encodedPass = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPass);
         user.setCreatedAt(LocalDateTime.now());
+        if (user.getProfileImgUrl() == null){
+            user.setProfileImgUrl("https://i.imgur.com/LGGL7VJ.png");
+        }
         return new ResponseEntity(
                 new UserDTO().makeDTO(userRepository.save(user)), HttpStatus.CREATED
         );

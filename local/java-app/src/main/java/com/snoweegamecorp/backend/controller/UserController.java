@@ -78,6 +78,18 @@ public class UserController {
 								)
 				);
 	}
+	@GetMapping("/find/{email}")
+	public ResponseEntity getByUsername(@PathVariable String email) {
+		return ResponseEntity
+				.ok()
+				.body(
+						new UserDTO()
+								.makeDTO(
+										repository
+												.findByEmail(email)
+								)
+				);
+	}
 	@PutMapping("{id}")
 	public ResponseEntity updateUserBy(@PathVariable Long id, @Valid @RequestBody UserModel userModel){
 		UserModel user = new UserModel(
