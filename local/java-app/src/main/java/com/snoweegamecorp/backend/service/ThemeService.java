@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,12 @@ public class ThemeService {
                 .orElseThrow(
                         () -> new ResourceNotFoundException("Entity not found")
                 );
+    }
+
+    @Transactional(readOnly = true)
+    public List<ThemeModel> findByName(String name) {
+        List<ThemeModel> themes = themeRepository.findByName(name);
+        return themes;
     }
 
     @Transactional

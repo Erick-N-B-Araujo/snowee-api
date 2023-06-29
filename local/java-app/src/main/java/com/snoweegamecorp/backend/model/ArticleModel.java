@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -23,21 +25,30 @@ public class ArticleModel implements Serializable {
     @GenericGenerator(name= "increment", strategy = "increment")
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String title;
 
     @Column(columnDefinition = "TEXT")
-    private String descriptionText;
+    private String subTitle;
 
     @Column(columnDefinition = "TEXT")
-    private String articleText;
+    private String description;
+    @Column(columnDefinition = "TEXT")
+    private String[] instructionList;
+    @Column(columnDefinition = "TEXT")
+    private String[] codeList;
 
+    @Column(columnDefinition = "TEXT")
+    private String ending;
+
+    @Column(columnDefinition = "TEXT")
     private String imgUrl;
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant createdAt;
-
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant updatedAt;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime createdAt;
+    @Column
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     @JsonIgnoreProperties("articles")
@@ -53,28 +64,21 @@ public class ArticleModel implements Serializable {
     @PrePersist
     public void beforeSave() {
         if (getCreatedAt() == null){
-            setCreatedAt(Instant.now());
+            setCreatedAt(LocalDateTime.now());
         }
-        setUpdatedAt(Instant.now());
+        setUpdatedAt(LocalDateTime.now());
     }
 
     public ArticleModel(){}
 
-    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt) {
+    public ArticleModel(Long id, String title, String subTitle, String description, String[] instructionList, String[] codeList, String ending, String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, UserModel user, Set<ThemeModel> themes) {
         this.id = id;
         this.title = title;
-        this.descriptionText = descriptionText;
-        this.articleText = articleText;
-        this.imgUrl = imgUrl;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-    }
-
-    public ArticleModel(Long id, String title, String descriptionText, String articleText, String imgUrl, Instant createdAt, Instant updatedAt, UserModel user, Set<ThemeModel> themes) {
-        this.id = id;
-        this.title = title;
-        this.descriptionText = descriptionText;
-        this.articleText = articleText;
+        this.subTitle = subTitle;
+        this.description = description;
+        this.instructionList = instructionList;
+        this.codeList = codeList;
+        this.ending = ending;
         this.imgUrl = imgUrl;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -85,8 +89,11 @@ public class ArticleModel implements Serializable {
     public ArticleModel(ArticleModel articleModel) {
         this.id = articleModel.getId();
         this.title = articleModel.getTitle();
-        this.descriptionText = articleModel.getDescriptionText();
-        this.articleText = articleModel.getArticleText();
+        this.subTitle = articleModel.getSubTitle();
+        this.description = articleModel.getDescription();
+        this.instructionList = articleModel.getInstructionList();
+        this.codeList = articleModel.getCodeList();
+        this.ending = articleModel.getEnding();
         this.imgUrl = articleModel.getImgUrl();
         this.createdAt = articleModel.getCreatedAt();
         this.updatedAt = articleModel.getUpdatedAt();
@@ -110,14 +117,6 @@ public class ArticleModel implements Serializable {
         this.title = title;
     }
 
-    public String getArticleText() {
-        return articleText;
-    }
-
-    public void setArticleText(String articleText) {
-        this.articleText = articleText;
-    }
-
     public String getImgUrl() {
         return imgUrl;
     }
@@ -126,11 +125,11 @@ public class ArticleModel implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Instant getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -150,19 +149,51 @@ public class ArticleModel implements Serializable {
         this.user = user;
     }
 
-    public Instant getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Instant updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public String getDescriptionText() {
-        return descriptionText;
+    public String getSubTitle() {
+        return subTitle;
     }
 
-    public void setDescriptionText(String descriptionText) {
-        this.descriptionText = descriptionText;
+    public void setSubTitle(String subTitle) {
+        this.subTitle = subTitle;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String[] getInstructionList() {
+        return instructionList;
+    }
+
+    public void setInstructionList(String[] instructionList) {
+        this.instructionList = instructionList;
+    }
+
+    public String[] getCodeList() {
+        return codeList;
+    }
+
+    public void setCodeList(String[] codeList) {
+        this.codeList = codeList;
+    }
+
+    public String getEnding() {
+        return ending;
+    }
+
+    public void setEnding(String ending) {
+        this.ending = ending;
     }
 }

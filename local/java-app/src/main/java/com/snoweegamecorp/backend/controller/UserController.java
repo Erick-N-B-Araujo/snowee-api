@@ -127,4 +127,21 @@ public class UserController {
 				})
 				.orElse(null);
 	}
+	@PatchMapping("{id}")
+	public ResponseEntity patchUserById(@PathVariable Long id, @Valid @RequestBody UserModel userModel){
+		UserModel user = new UserModel(
+				repository.findById(id)
+						.orElseThrow(()->
+								new ResponseStatusException(HttpStatus.NOT_FOUND)
+						)
+		);
+		user.setFirstName(userModel.getFirstName());
+		user.setLastName(userModel.getLastName());
+		user.setProfileImgUrl(userModel.getProfileImgUrl());
+		user.setUpdatedAt(LocalDateTime.now());
+		repository.save(user);
+		return new ResponseEntity(
+				new UserDTO().makeDTO(user), HttpStatus.ACCEPTED
+		);
+	}
 }

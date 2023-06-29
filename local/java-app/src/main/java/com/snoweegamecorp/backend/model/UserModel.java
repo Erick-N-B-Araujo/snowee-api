@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(name = "tb_users")
 public class UserModel implements UserDetails, Serializable {
 	private static final long serialVerionUID = 1L;
+
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name= "increment", strategy = "increment")
@@ -40,8 +41,6 @@ public class UserModel implements UserDetails, Serializable {
 	@NotBlank(message = "Campo requerido")
 	private String email;
 	@Column
-	@Size(min = 4, max = 60, message = "Password deve ter entre 4 a 60 caracteres")
-	@NotBlank(message = "Campo requerido")
 	private String password;
 	@Column
 	private String profileImgUrl;

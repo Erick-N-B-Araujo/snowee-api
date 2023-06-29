@@ -45,6 +45,12 @@ public class ThemeController {
         return ResponseEntity.ok().body(themeModel);
     }
 
+    @GetMapping(value = "/name/{name}")
+    public ResponseEntity<List<ThemeModel>> findById(@PathVariable String name){
+        List<ThemeModel> themeList = themeService.findByName(name);
+        return ResponseEntity.ok().body(themeList);
+    }
+
     @GetMapping(value = "/list-all")
     public ResponseEntity<List<ThemeModel>> findListAll(){
         List<ThemeModel> themeModels = themeRepository.findAll();

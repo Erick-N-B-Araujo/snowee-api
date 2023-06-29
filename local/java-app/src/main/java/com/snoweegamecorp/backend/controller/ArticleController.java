@@ -1,5 +1,6 @@
 package com.snoweegamecorp.backend.controller;
 
+import com.snoweegamecorp.backend.dto.ArticleDTO;
 import com.snoweegamecorp.backend.model.ArticleModel;
 import com.snoweegamecorp.backend.repository.ArticleRepository;
 import com.snoweegamecorp.backend.service.ArticleService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,9 +28,14 @@ public class ArticleController {
     private ArticleRepository articleRepository;
 
     @GetMapping
-    public ResponseEntity<List<ArticleModel>> findListAll(){
-        List<ArticleModel> articleModels = articleRepository.findAll();
-        return ResponseEntity.ok().body(articleModels);
+    public ResponseEntity<List<ArticleDTO>> findListAll(){
+        List<ArticleDTO> articleDTOS = new ArrayList<>();
+        List<ArticleModel> articlesList = articleRepository.findAll();
+        for (ArticleModel article: articlesList){
+            ArticleDTO articleDTO = new ArticleDTO(article);
+            articleDTOS.add(articleDTO);
+        }
+        return ResponseEntity.ok().body(articleDTOS);
     }
 
     @GetMapping(value = "/list-all")
