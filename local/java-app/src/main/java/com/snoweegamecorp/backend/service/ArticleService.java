@@ -47,6 +47,11 @@ public class ArticleService {
     }
 
     @Transactional
+    public List<ArticleModel> findTitleLike(String title) {
+        return articleRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    @Transactional
     public ArticleModel update(Long id, ArticleModel updatedArticle) {
         try {
             ArticleModel article = articleRepository.getOne(id);

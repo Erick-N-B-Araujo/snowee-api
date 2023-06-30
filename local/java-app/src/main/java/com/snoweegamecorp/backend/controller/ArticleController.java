@@ -53,9 +53,20 @@ public class ArticleController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ArticleModel> findById(@PathVariable Long id){
-        ArticleModel articleModel = articleService.findById(id);
-        return ResponseEntity.ok().body(articleModel);
+    public ResponseEntity<ArticleDTO> findById(@PathVariable Long id){
+        ArticleDTO articleDTO = new ArticleDTO(articleService.findById(id));
+        return ResponseEntity.ok().body(articleDTO);
+    }
+
+    @GetMapping(value = "/title/{title}")
+    public ResponseEntity<List<ArticleDTO>> findByTitleLike(@PathVariable String title){
+        List<ArticleDTO> articleDTOS = new ArrayList<>();
+        List<ArticleModel> articlesList = articleService.findTitleLike(title);
+        for (ArticleModel article: articlesList){
+            ArticleDTO articleDTO = new ArticleDTO(article);
+            articleDTOS.add(articleDTO);
+        }
+        return ResponseEntity.ok().body(articleDTOS);
     }
 
     @PostMapping()
