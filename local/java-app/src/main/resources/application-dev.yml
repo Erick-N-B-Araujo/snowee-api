@@ -30,4 +30,4 @@ security:
 
 jwt:
   secret: ${JWT_SECRET:MY-JWT-SECRET}
-  duration: ${JWT_DURATION:86400}
+  duration: ${JWT_DURATION:1800}

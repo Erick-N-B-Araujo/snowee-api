@@ -80,14 +80,15 @@ public class UserController {
 	}
 	@GetMapping("/find/{email}")
 	public ResponseEntity getByUsername(@PathVariable String email) {
+		UserDTO foundedUser = new UserDTO()
+									.makeDTO(
+											repository
+													.findByEmail(email)
+									);
 		return ResponseEntity
 				.ok()
 				.body(
-						new UserDTO()
-								.makeDTO(
-										repository
-												.findByEmail(email)
-								)
+						foundedUser
 				);
 	}
 	@PutMapping("{id}")

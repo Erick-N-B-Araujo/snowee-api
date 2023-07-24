@@ -23,7 +23,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private Environment env;
 
     private static final String[] AUTH = {"/oauth/token", "/auth/**", "/h2-console/**"};
-    private static final String[] PUBLIC = {"/themes/list-all", "/articles/list-all", "/themes/**", "/articles/**"};
+    private static final String[] PUBLIC = {"/themes/list-all", "/articles/list-all", "/themes/**", "/articles/**", "/users/find"};
     private static final String[] OPERATOR_OR_ADMIN = {"/users/**", "/themes/**", "/articles/**"};
     private static final String[] ADMIN = {"/users/**","/permissions/**", "/themes/**", "/articles/**"};
 
@@ -44,6 +44,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(AUTH).permitAll()
                 .antMatchers(HttpMethod.GET, PUBLIC).permitAll()
                 .antMatchers(HttpMethod.GET, OPERATOR_OR_ADMIN).permitAll()
+                .antMatchers(HttpMethod.PATCH, OPERATOR_OR_ADMIN).permitAll()
                 .antMatchers(OPERATOR_OR_ADMIN).hasAnyRole("OPERATOR","ADMIN")
                 .antMatchers(ADMIN).hasRole("ADMIN")
                 .anyRequest().authenticated();

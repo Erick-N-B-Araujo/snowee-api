@@ -16,7 +16,7 @@ import java.util.Set;
 @Table(name = "tb_themes")
 public class ThemeModel implements Serializable {
 
-    private static final long serialVerionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "increment")
@@ -31,7 +31,16 @@ public class ThemeModel implements Serializable {
     @JoinTable(name = "tb_article_themes",
             joinColumns = @JoinColumn(name = "theme_id"),
             inverseJoinColumns = @JoinColumn(name = "article_id"))
-    @JsonIgnoreProperties({"themes", "user"})
+    @JsonIgnoreProperties({"themes",
+                            "user",
+                            "subTitle",
+                            "description",
+                            "instructionList",
+                            "codeList",
+                            "ending",
+                            "imgUrl",
+                            "createdAt",
+                            "updatedAt"})
     Set<ArticleModel> articles;
 
     public ThemeModel(){}

@@ -39,7 +39,7 @@ public class ThemeService {
 
     @Transactional(readOnly = true)
     public List<ThemeModel> findByName(String name) {
-        List<ThemeModel> themes = themeRepository.findByName(name);
+        List<ThemeModel> themes = themeRepository.findByNameContainingIgnoreCase(name);
         return themes;
     }
 
