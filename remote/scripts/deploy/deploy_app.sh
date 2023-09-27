@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORKSPACE=/var/lib/jenkins/workspace/Deploy-Backend/local
+WORKSPACE=/var/lib/jenkins/workspace/Backend/local
 
 echo "Deploying app..."
 
