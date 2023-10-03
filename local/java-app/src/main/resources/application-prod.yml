@@ -6,11 +6,12 @@ app:
 server:
    port: 8080
    ssl:
+      enabled: true
       keyStoreType: PKCS12
-      keyAlias: snoweeapi
       key-store: src/main/resources/snoweeapi.p12
       key-store-password: AdcOP1997!
-      
+      keyAlias: snoweeapi
+
 spring:
   hikari:
     connection-test-query: SELECT 1
