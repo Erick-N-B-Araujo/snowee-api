@@ -23,8 +23,8 @@ public class ArticleDTO implements Serializable {
     private String title;
     private String subTitle;
     private String description;
-    private String[] instructionList;
-    private String[] codeList;
+    private List<String> instructionList;
+    private List<String> codeList;
     private String ending;
     private String imgUrl;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
@@ -49,7 +49,7 @@ public class ArticleDTO implements Serializable {
     Set<ThemeModel> themes;
     public ArticleDTO() {
     }
-    public ArticleDTO(Long id, String title, String subTitle, String description, String[] instructionList, String[] codeList, String ending, String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, UserModel user, Set<ThemeModel> themes) {
+    public ArticleDTO(Long id, String title, String subTitle, String description, List<String> instructionList, List<String> codeList, String ending, String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, UserModel user, Set<ThemeModel> themes) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
@@ -116,16 +116,16 @@ public class ArticleDTO implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String[] getInstructionList() {
+    public List<String> getInstructionList() {
         return instructionList;
     }
-    public void setInstructionList(String[] instructionList) {
+    public void setInstructionList(List<String> instructionList) {
         this.instructionList = instructionList;
     }
-    public String[] getCodeList() {
+    public List<String> getCodeList() {
         return codeList;
     }
-    public void setCodeList(String[] codeList) {
+    public void setCodeList(List<String> codeList) {
         this.codeList = codeList;
     }
     public String getEnding() {
