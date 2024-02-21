@@ -62,7 +62,7 @@ public class UserModel implements UserDetails, Serializable {
 	private List<ArticleModel> articles;
 	@PrePersist
 	public void beforeSave() {
-		if (!getEmail().equals("batistasd678@gmail.com") || !getEmail().equals("admin@snowee.com")){
+		if (!getEmail().equals("batistasd678@gmail.com") || !getEmail().equals("test@snowee.com")){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
 			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
 			setPermissions(permissions);

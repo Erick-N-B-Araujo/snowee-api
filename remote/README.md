@@ -1,1 +1,0 @@
-# snowee-api

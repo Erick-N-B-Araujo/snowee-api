@@ -64,6 +64,18 @@ public class BackendApplication {
 						permissions
 				);
 				userRepository.save(user);
+				UserModel user2 = new UserModel(
+						id,
+						"Erick",
+						"Araujo",
+						"test@snowee.com",
+						encodedPass,
+						profilePic,
+						LocalDateTime.now(),
+						null,
+						permissions
+				);
+				userRepository.save(user2);
 			}
 		};
 	}
