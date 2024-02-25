@@ -1,9 +1,6 @@
 # InteliJ cache directory
 .idea/
 target/
-*.ctb~
-docs/Anotations.ctb~~
-docs/Anotations.ctb~~~
 core.*
 hs_err_pid*
 local/postgres-data

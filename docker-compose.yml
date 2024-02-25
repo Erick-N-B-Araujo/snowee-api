@@ -1,0 +1,15 @@
+version: '3'
+
+services: 
+  api:
+    container_name: backend
+    image: ericknbaraujo/snowee-back:latest
+    build: .
+    environment:
+      TZ: America/Sao_Paulo
+    volumes:
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    restart: always
+
