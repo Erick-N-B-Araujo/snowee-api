@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,10 +34,12 @@ public class ArticleModel implements Serializable {
 
     @Column(columnDefinition = "TEXT")
     private String description;
-    @Column(columnDefinition = "TEXT")
-    private String[] instructionList;
-    @Column(columnDefinition = "TEXT")
-    private String[] codeList;
+    @Column()
+    @ElementCollection(targetClass = String.class)
+    private List<String> instructionList;
+    @Column()
+    @ElementCollection(targetClass = String.class)
+    private List<String> codeList;
 
     @Column(columnDefinition = "TEXT")
     private String ending;
@@ -71,7 +74,7 @@ public class ArticleModel implements Serializable {
 
     public ArticleModel(){}
 
-    public ArticleModel(Long id, String title, String subTitle, String description, String[] instructionList, String[] codeList, String ending, String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, UserModel user, Set<ThemeModel> themes) {
+    public ArticleModel(Long id, String title, String subTitle, String description, List<String> instructionList, List<String> codeList, String ending, String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt, UserModel user, Set<ThemeModel> themes) {
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
@@ -173,19 +176,19 @@ public class ArticleModel implements Serializable {
         this.description = description;
     }
 
-    public String[] getInstructionList() {
+    public List<String> getInstructionList() {
         return instructionList;
     }
 
-    public void setInstructionList(String[] instructionList) {
+    public void setInstructionList(List<String> instructionList) {
         this.instructionList = instructionList;
     }
 
-    public String[] getCodeList() {
+    public List<String> getCodeList() {
         return codeList;
     }
 
-    public void setCodeList(String[] codeList) {
+    public void setCodeList(List<String> codeList) {
         this.codeList = codeList;
     }
 
