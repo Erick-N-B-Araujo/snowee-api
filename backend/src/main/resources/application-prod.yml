@@ -8,9 +8,8 @@ server:
    ssl:
       enabled: true
       keyStoreType: PKCS12
-      key-store: src/main/resources/snoweeapi.p12
+      key-store: snoweeapi.p12
       key-store-password: AdcOP1997!
-      keyAlias: snoweeapi
 
 spring:
   hikari:
@@ -21,7 +20,7 @@ spring:
     auto-commit: FALSE
     connection-timeout: 30000
   datasource:
-    url: jdbc:postgresql://database/dbsnowee
+    url: jdbc:postgresql://191.96.251.3:5432/dbsnowee
     driverClassName: org.postgresql.Driver
     platform: postgres
     username: postgres

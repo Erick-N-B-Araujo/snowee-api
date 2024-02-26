@@ -12,6 +12,8 @@ FROM openjdk:11 AS compiled
 
 COPY --from=build /java-app/target/api-1.0.0-SNAPSHOT.jar /app/
 
+COPY --from=build /java-app/src/main/resources/snoweeapi.p12 /app/
+
 WORKDIR /app
 
 EXPOSE 8080
