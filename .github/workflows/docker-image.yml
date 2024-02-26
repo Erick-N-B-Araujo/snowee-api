@@ -1,0 +1,33 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and Push Docker Image
+      run: |
+        DOCKER_TAG=$(date +'%Y%m%d')
+        docker-compose build
+        docker image tag ericknbaraujo/snowee-back:latest ericknbaraujo/snowee-back:$DOCKER_TAG
+        docker push ericknbaraujo/snowee-front:$DOCKER_TAG
+        docker push ericknbaraujo/snowee-front:latest
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        
+    - name: Deploy to PROD Server
+      run: |
+        sudo apt-get install sshpass
+        sshpass -p ${{ secrets.SSH_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.HOSTNAME }} 'cd /home/prod_user/snowee-services/backend && docker-compose down && docker-compose up -d'
