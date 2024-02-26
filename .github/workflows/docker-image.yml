@@ -22,8 +22,8 @@ jobs:
         DOCKER_TAG=$(date +'%Y%m%d')
         docker-compose build
         docker image tag ericknbaraujo/snowee-back:latest ericknbaraujo/snowee-back:$DOCKER_TAG
-        docker push ericknbaraujo/snowee-front:$DOCKER_TAG
-        docker push ericknbaraujo/snowee-front:latest
+        docker push ericknbaraujo/snowee-back:$DOCKER_TAG
+        docker push ericknbaraujo/snowee-back:latest
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         
