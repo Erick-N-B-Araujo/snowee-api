@@ -5,6 +5,7 @@ import java.util.*;
 import com.snoweegamecorp.backend.model.PermissionModel;
 import com.snoweegamecorp.backend.repository.PermissionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,13 +27,23 @@ import org.springframework.stereotype.Controller;
 			})
 public class BackendApplication {
 	@Autowired
-	private PermissionRepository permissionRepo;
+	private PermissionRepository permissionRepository;
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	public Long id = Long.valueOf(1);
-
+	@Value("${env.user.admin.username}")
+	private String adminUsername;
+	@Value("${env.user.admin.password}")
+	private String adminPassword;
+	@Value("${env.user.tester.username}")
+	private String testerUsername;
+	@Value("${env.user.tester.password}")
+	private String testerPassword;
+	@Value("${env.user.guest.username}")
+	private String guestUsername;
+	@Value("${env.user.guest.password}")
+	private String guestPassword;
 	public String profilePic = "https://i.imgur.com/CWf3Y4j.jpg";
 
 	@Bean
@@ -40,42 +51,56 @@ public class BackendApplication {
 		return new CommandLineRunner() {
 			@Override
 			public void run(String... args) throws Exception {
-				String encodedPass = passwordEncoder.encode("1234");
+				String adminEncodedPass = passwordEncoder.encode(adminPassword);
+				String testerEncodedPass = passwordEncoder.encode(testerPassword);
+				String guestEncodedPass = passwordEncoder.encode(guestPassword);
 				PermissionModel permissionAdmin = new PermissionModel(1L, "ROLE_ADMIN");
-				PermissionModel permissionGuest = new PermissionModel(2L, "ROLE_OPERATOR");
+				PermissionModel permissionOperator = new PermissionModel(2L, "ROLE_OPERATOR");
 
-				if (permissionRepo.existsById(permissionAdmin.getId()) && permissionRepo.existsById(permissionGuest.getId())){
+				if (permissionRepository.existsById(permissionAdmin.getId()) && permissionRepository.existsById(permissionOperator.getId())){
 						System.out.println("Permissions already recorded!");
 				} else {
-					permissionRepo.save(permissionAdmin);
-					permissionRepo.save(permissionGuest);
+					permissionRepository.save(permissionAdmin);
+					permissionRepository.save(permissionOperator);
+					Set<PermissionModel> permissionsAll = new HashSet<>(Arrays.asList(permissionAdmin, permissionOperator));
+					Set<PermissionModel> permissionsOperator = new HashSet<>(Arrays.asList(permissionAdmin, permissionOperator));
+					UserModel adminUser = new UserModel(
+							1L,
+							"Erick",
+							"Admin",
+							adminUsername,
+							adminEncodedPass,
+							profilePic,
+							LocalDateTime.now(),
+							null,
+							permissionsAll
+					);
+					userRepository.save(adminUser);
+					UserModel testerUser = new UserModel(
+							2L,
+							"Erick",
+							"Tester",
+							testerUsername,
+							testerEncodedPass,
+							profilePic,
+							LocalDateTime.now(),
+							null,
+							permissionsAll
+					);
+					userRepository.save(testerUser);
+					UserModel operatorUser = new UserModel(
+							3L,
+							"Erick",
+							"Operator",
+							guestUsername,
+							guestEncodedPass,
+							profilePic,
+							LocalDateTime.now(),
+							null,
+							permissionsOperator
+					);
+					userRepository.save(operatorUser);
 				}
-
-				Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permissionAdmin, permissionGuest));
-				UserModel user = new UserModel(
-						id,
-						"Erick",
-						"Araujo",
-						"batistasd678@gmail.com",
-						encodedPass,
-						profilePic,
-						LocalDateTime.now(),
-						null,
-						permissions
-				);
-				userRepository.save(user);
-				UserModel user2 = new UserModel(
-						id,
-						"Erick",
-						"Araujo",
-						"test@snowee.com",
-						encodedPass,
-						profilePic,
-						LocalDateTime.now(),
-						null,
-						permissions
-				);
-				userRepository.save(user2);
 			}
 		};
 	}

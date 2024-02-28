@@ -19,31 +19,28 @@ public class LoginDTO  implements Serializable {
     private String profileImg;
     private String username;
     private String password;
-    private String token;
 
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime loggedAt;
     public LoginDTO() {
     }
 
-    public LoginDTO(Long id, String firstname, String lastname, String profileImg, String username, String password, String token, LocalDateTime loggedAt) {
+    public LoginDTO(Long id, String firstname, String lastname, String profileImg, String username, String password, LocalDateTime loggedAt) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.profileImg = profileImg;
         this.username = username;
         this.password = password;
-        this.token = token;
         this.loggedAt = loggedAt;
     }
 
-    public LoginDTO(Long id, String firstname, String lastname, String profileImg, String username, String token, LocalDateTime loggedAt) {
+    public LoginDTO(Long id, String firstname, String lastname, String profileImg, String username, LocalDateTime loggedAt) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.profileImg = profileImg;
         this.username = username;
-        this.token = token;
         this.loggedAt = loggedAt;
     }
 
@@ -53,7 +50,6 @@ public class LoginDTO  implements Serializable {
         lastname = loginModel.getLastname();
         profileImg = loginModel.getProfileImg();
         username = loginModel.getUsername();
-        token = loginModel.getToken();
         loggedAt = loginModel.getLoggedAt();
     }
     @Transactional
@@ -87,14 +83,6 @@ public class LoginDTO  implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getFirstname() {

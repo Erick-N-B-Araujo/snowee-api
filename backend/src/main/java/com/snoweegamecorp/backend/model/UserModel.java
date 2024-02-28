@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -50,7 +51,6 @@ public class UserModel implements UserDetails, Serializable {
 	@Column
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime updatedAt;
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "tb_user_permissions",
 				joinColumns = @JoinColumn(name = "user_id"),
@@ -60,9 +60,15 @@ public class UserModel implements UserDetails, Serializable {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties({"user"})
 	private List<ArticleModel> articles;
+
+	@Value("${env.user.admin.username}")
+	private String adminUsername;
+	@Value("${env.user.tester.username}")
+	private String testerUsername;
+
 	@PrePersist
 	public void beforeSave() {
-		if (!getEmail().equals("batistasd678@gmail.com") || !getEmail().equals("test@snowee.com")){
+		if (!getEmail().equals(adminUsername) || !getEmail().equals(testerUsername)){
 			PermissionModel permission = new PermissionModel( 2L, "ROLE_OPERATOR");
 			Set<PermissionModel> permissions = new HashSet<>(Arrays.asList(permission));
 			setPermissions(permissions);

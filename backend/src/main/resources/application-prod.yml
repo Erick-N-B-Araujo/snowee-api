@@ -9,7 +9,7 @@ server:
       enabled: true
       keyStoreType: PKCS12
       key-store: snoweeapi.p12
-      key-store-password: AdcOP1997!
+      key-store-password: ${env.keystore.password}
 
 spring:
   hikari:
@@ -20,7 +20,7 @@ spring:
     auto-commit: FALSE
     connection-timeout: 30000
   datasource:
-    url: jdbc:postgresql://191.96.251.3:5432/dbsnowee
+    url: jdbc:postgresql://${env.database.hostname}:5432/dbsnowee
     driverClassName: org.postgresql.Driver
     platform: postgres
     username: postgres
@@ -39,8 +39,8 @@ spring:
 security:
   oauth2:
     client:
-      client-id: ${CLIENT_ID:snoweeapi}
-      client-secret: ${CLIENT_SECRET:snoweeapi}
+      client-id: ${CLIENT_ID:${env.client.id}}
+      client-secret: ${CLIENT_SECRET:${env.client.secret}}
 
 jwt:
   secret: ${JWT_SECRET:MY-JWT-SECRET}

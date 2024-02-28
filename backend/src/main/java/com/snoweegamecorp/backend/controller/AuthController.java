@@ -40,17 +40,25 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody LoginModel loginModel) {
-        UserModel user = userRepository.findByEmail(loginModel.getUsername());
+        UserModel user = userRepository.
+                findByEmail(
+                        loginModel.getUsername()
+                );
         if (user != null){
-            return new ResponseEntity(
-                    new LoginDTO(authService.Login(loginModel)), HttpStatus.OK
-            );
+            if (authService.Login(loginModel) != null){
+                return new ResponseEntity(
+                        new LoginDTO(loginModel),
+                        HttpStatus.OK
+                );
+            } else {
+                return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+            }
         }else{
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/logged")
     public ResponseEntity getUsersLogged() {
         List<LoginModel> loggedUsers = loginRepository.findAll();
         return new ResponseEntity(

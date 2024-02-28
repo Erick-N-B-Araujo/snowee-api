@@ -38,6 +38,8 @@ public class AuthService{
                 loginModel.setProfileImg(user.getProfileImgUrl());
                 loginModel.setLoggedAt(LocalDateTime.now());
                 return loginRepository.save(loginModel);
+            } else {
+                return null;
             }
         }
         return null;

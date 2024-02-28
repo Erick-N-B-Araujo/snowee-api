@@ -13,10 +13,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Entity
@@ -45,23 +42,20 @@ public class LoginModel implements Serializable {
     private String password;
 
     @Column
-    @Size(min = 3, max = 350, message = "Tamanho do token")
-    private String token;
-
-    @Column
     private String profileImg;
 
     @Column
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime loggedAt;
 
-    public LoginModel(long id, String firstname, String lastname, String username,String profileImg, String token, LocalDateTime loggedAt) {
+
+
+    public LoginModel(long id, String firstname, String lastname, String username,String profileImg, LocalDateTime loggedAt) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.username = username;
         this.profileImg = profileImg;
-        this.token = token;
         this.loggedAt = loggedAt;
     }
     public LoginModel(){
@@ -72,7 +66,6 @@ public class LoginModel implements Serializable {
         lastname = user.getLastname();
         username = user.getUsername();
         profileImg = user.getProfileImg();
-        token = user.getToken();
         loggedAt = user.getLoggedAt();
     }
     public long getId() {
@@ -94,14 +87,6 @@ public class LoginModel implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public LocalDateTime getLoggedAt() {
@@ -126,5 +111,18 @@ public class LoginModel implements Serializable {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof LoginModel)) return false;
+        LoginModel that = (LoginModel) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

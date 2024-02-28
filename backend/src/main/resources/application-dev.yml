@@ -25,8 +25,8 @@ spring:
 security:
   oauth2:
     client:
-      client-id: ${CLIENT_ID:snoweeapi}
-      client-secret: ${CLIENT_SECRET:snoweeapi}
+      client-id: ${CLIENT_ID:${env.client.id}}
+      client-secret: ${CLIENT_SECRET:${env.client.secret}}
 
 jwt:
   secret: ${JWT_SECRET:MY-JWT-SECRET}
