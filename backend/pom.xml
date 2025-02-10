@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.4.4</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.snoweegamecorp</groupId>
 	<artifactId>api</artifactId>
@@ -97,11 +97,15 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-            <!-- Make tomcat automatically reload certificates at runtime -->
             <groupId>info.schnatterer.tomcat-reloading-connector</groupId>
             <artifactId>reloading-connector-spring-boot</artifactId>
             <version>0.3.0</version>
         </dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>1.7.0</version>
+		</dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

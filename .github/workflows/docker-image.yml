@@ -20,7 +20,7 @@ jobs:
     - name: Build and Push Docker Image
       run: |
         DOCKER_TAG=$(date +'%Y%m%d')
-        docker-compose build
+        docker compose build
         docker image tag ericknbaraujo/snowee-back:latest ericknbaraujo/snowee-back:$DOCKER_TAG
         docker push ericknbaraujo/snowee-back:$DOCKER_TAG
         docker push ericknbaraujo/snowee-back:latest

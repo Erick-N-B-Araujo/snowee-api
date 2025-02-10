@@ -7,6 +7,17 @@ services:
     build: .
     environment:
       TZ: America/Sao_Paulo
+      OAUTH2_ID: snoweeapi
+      OAUTH2_SECRET: snoweeapi
+      KEYSTORE_PASSWORD: AdcOP1997!
+      DATABASE_HOSTNAME: localhost
+      USER_ADMIN_USERNAME: erick.admin@snowee.com
+      USER_ADMIN_PASSWORD: TccET0001!
+      USER_TESTER_USERNAME: tester@snowee.com
+      USER_TESTER_PASSWORD: TccET0001!
+      USER_GUEST_USERNAME: operator@snowee.com
+      USER_GUEST_PASSWORD: TccET0001!
+
     volumes:
       - ~/.m2:/root/.m2
     ports:
